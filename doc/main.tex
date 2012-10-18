@@ -1,0 +1,136 @@
+\documentclass[a4paper,12pt,notitlepage]{mwrep}
+%%\documentclass[polish,11pt,a4paper,twosides]{article}
+%%%\usepackage{fullpage}
+
+\usepackage{./mystyle}
+
+
+\begin{document}
+
+% na potrzeby strony tytułowej robimy taki nagłówek : 
+\newcommand{\cfoottext}{Kraków, październik 2012}
+\renewcommand{\footrulewidth}{0.4pt}
+\cfoot{\cfoottext}
+
+\begin{titlepage}
+\begin{center}
+  \resizebox{\textwidth}{!}{\mbox{AKADEMIA GÓRNICZO-HUTNICZA}}\\
+  \vspace{2ex}
+  \resizebox{\textwidth}{!}{\mbox{Wydział Informatyki, Elektroniki i Telekomunikacji}}\\
+  \vspace{4ex}
+  \includegraphics[scale=0.15]{images/agh_crop.pdf} \\
+  \vspace{4ex}
+  \begin{large}KATEDRA INFORMATYKI\end{large} \\
+  \vspace{8ex}
+  \textbf{\begin{Huge}Problem plecakowy\end{Huge}} \\
+  \vspace{3ex}
+  \textit{\begin{Large}Algorytm pszczeli\end{Large}} \\
+
+  \vfill
+
+  \begin{Large}\wersja\end{Large}\\
+\end{center}
+\begin{large}
+  \begin{tabularx}{\textwidth}{lXc}
+    \textit{Kierunek, rok studiów} &  & \textit{ } \\
+    \hspace{3em}Informatyka, rok III &  &  \\
+    \textit{Przedmiot} &  & \\
+	\multicolumn{3}{l}{\hspace{3em}Badania Operacyjne} \\
+    \textit{Prowadzący przedmiot} &  & \textit{rok akademicki:} \hfill 2012/2013\\
+    \hspace{3em}dr inż. Joanna Kwiecień &  & \textit{semestr:} \hfill zimowy\\
+  \end{tabularx}
+\end{large}
+
+\vspace{2ex}
+
+\noindent
+\begin{Large}
+Skład zespołu:\end{Large}
+\begin{large}
+  \newlength{\tblwidth}
+  \setlength{\tblwidth}{\textwidth}
+  \addtolength{\tblwidth}{-3em}
+  \begin{flushright}
+    \begin{tabularx}{\tblwidth}{lXr}
+      Martyna Wałaszewska &  &  \\
+      Rafał Szalecki &  &  \\
+      Wojciech Krzystek &  &  \\
+      Grzegorz Wilaszek &  &  \\
+    \end{tabularx}\end{flushright}
+  \end{large}
+  \thispagestyle{fancy}
+\end{titlepage}
+
+
+
+\onehalfspacing
+
+\rhead{\scriptsize{Maria}}
+\lhead{\scriptsize{Bylica, Danek, Krzystek, Mazur}}
+
+\lfoot{\scriptsize{Copyright \textcopyright 2012 AGH}}
+\cfoot{\normalsize Strona \thepage \ z \pageref{LastPage}}
+\rfoot{\scriptsize{\wersja}}
+\setcounter{secnumdepth}{2}
+
+\setcounter{tocdepth}{2}
+
+
+\vfill
+\begin{center}
+\singlespacing
+\fbox{\begin{minipage}{0.8\textwidth}
+\footnotesize Niniejsze opracowanie powstało w trakcie i jako rezultat zajęć dydaktycznych z przedmiotu 
+wymienionego na stronie tytułowej, prowadzonych w Akademii Górniczo-Hutniczej w Krakowie
+(AGH) przez osobę (osoby) wymienioną (wymienione) po słowach "Prowadzący zajęcia"
+i nie może być wykorzystywane w jakikolwiek sposób i do jakichkolwiek celów, 
+w całości lub części, w szczególności publikowane w jakikolwiek sposób
+i w jakiejkolwiek formie, bez uzyskania uprzedniej, pisemnej zgody tej
+osoby (tych osób) lub odpowiednich władz AGH.
+\vspace{2ex} \\
+\textbf{Copyright \textcopyright 2012 Akademia Górniczo-Hutnicza (AGH) w Krakowie}
+      \end{minipage}
+}
+\onehalfspacing
+\end{center}
+
+\tableofcontents
+
+\chapter{Tematyka projektu}
+
+\chapter{Opis problemu}
+
+\chapter{Opis algorytmu}
+
+\chapter{Opis aplikacji}
+\section{Podręcznik użytkownika}
+\subsection{Instalacja}
+
+\chapter{Podsumowanie}
+
+\chapter{Podział pracy}
+
+\addtocounter{page}{-1}
+
+\appendix
+\chapter*{Załączniki}
+\begin{description}
+	\item[plik blah.pdf]	 --- blahblah - Pierwszy załącznik
+\end{description}
+
+\begin{thebibliography}{9}
+
+\bibitem{progit} 
+	Chacon, Scott
+	\emph{Pro Git} dostępna na licencji Creative Commons \\
+	\href{http://git-scm.com/book}{wersja online} (Pro Git jest częścią oficjalnej dokumentacji Git'a: \href{http://git-scm.com/documentation}{link})
+
+\end{thebibliography}
+
+
+\listoffigures
+
+\listoftables
+
+\label{LastPage}\phantom{\phantomsection{LastPage}}
+\end{document}

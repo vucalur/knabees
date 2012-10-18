@@ -1,0 +1,99 @@
+\ProvidesPackage{mystyle}
+
+%%%%%%%%%%%%%%%%		GENERAL SETTINGS		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[english,polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[MeX]{polski}
+\usepackage[pdftex]{graphicx}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{paralist}			% inparaenum : http://en.wikibooks.org/wiki/LaTeX/List_Structures#Inline_lists
+\usepackage{fancybox}
+\usepackage{array}				% for vertical aligning in tabular envs
+\usepackage{fmtcount}			
+%%\usepackage[a4paper, left=1.5cm, right=1.5cm, top=1.4cm, bottom=1.75cm, headsep=0.5cm]{geometry}		% tutaj zmieniać szerokości, długości, itp.
+\usepackage[a4paper, margin=6em, vmargin={6em, 8em}]{geometry}
+\usepackage{ltxtable}
+%%%	%\addtolength{\oddsidemargin}{-.25cm}
+%%%	%\addtolength{\evensidemargin}{-.25cm}
+%%%	%\addtolength{\textwidth}{0.5cm}
+%%%	%\addtolength{\topmargin}{+.25cm}
+%%%	%\addtolength{\textheight}{0.5cm}
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\usepackage{latexsym}
+\usepackage{tabularx}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage[pdftex]{graphicx}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage[table]{xcolor}		% do kolorowania komórek tabel
+
+%% from : http://stackoverflow.com/a/722954/1432478 :
+% allows for temporary adjustment of side margins
+\usepackage{chngpage}
+
+% provides filler text
+\usepackage{lipsum}
+
+% just makes the table prettier (see \toprule, \bottomrule, etc. commands below)
+\usepackage{booktabs}
+
+
+\selectlanguage{polish}
+
+\setlength{\columnsep}{1.5cm}
+\setlength{\columnseprule}{0pt}
+
+%\hyphenpenalty=10000			% blokuje rozdzielanie słów, ale dość kiepsko
+
+
+%%%%%%%%%%%%%%%%				OUR CUSTOM COMMANDS		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% czcionki sans zamiast serif  -  póki co wyłączymy:
+%\renewcommand{\familydefault}{\sfdefault}
+
+\newcommand{\ud}{\,\mathrm{d}}	% elegancki odstęp przed dx w całce - wątpię żeby się na PSI przydało :-)
+\newcommand{\dx}{\ud x}			% to co wyżej, dodane x odrazu
+\newcommand{\je}[0]{\\[1ex]}	% skrót na \\[1ex] - je: Jeden Ex (oe: One Ex już zajęta)
+\newcommand{\de}[0]{\\[2ex]}
+\newcommand{\te}[0]{\\[3ex]}
+\newcommand{\kd}[0]{\quad}		% skróty na quady (odstępy poziome)
+\newcommand{\kkd}[0]{\qquad}
+\newcommand{\fe}[0]{\item}		% osobiście używam tego skrótu na \item. Po co? Jak TABSIZE == 4 to \item (5 znaków) rozwala wcięcia a \fe (3 znaki) - nie.
+
+\newcommand{\wersja}{Wersja 1.0 z dnia \today}
+%\newcommand{\cfoottext}{Kraków, kwiecień 2012}
+
+%\renewcommand{\footrulewidth}{0.4pt}
+%\cfoot{\cfoottext}
+
+\frenchspacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{PSI - projekt}
+\author{Martyna Wałaszewska \and Rafał Szalecki \and Wojciech Krzystek \and Grzegorz Wilaszek}
+\date{\today}
+
+\usepackage{color}
+%%%\hypersetup{colorlinks=true}			% te 3 linie nie działają przed dołączeniem hyperref, ale zrobimy to innaczej: \hypersetup{linkcolor=blue}  (patrz: niżej)
+%%%\definecolor{mycol}{rgb}{0,0,0}
+%%%\hypersetup{linkcolor=blue}
+
+\usepackage[pdftitle={PSI},pdfauthor={Martyna Walaszewska, Rafał Szalecki, Wojciech Krzystek, Grzegorz Wilaszek},pdftex]{hyperref}	% to musi być ostatni wpis w preambule - tyle mówi teoria, w praktyce działa (jest to potrzebne do zrobienia wpisów w właściwościach pdf)
+
+%	w sumie ja bym nie cudował i zostawił kolory linków takie jakie są - i tak jak się to drukuje to tych czewronych obwódek nie ma
+\definecolor{ourLinksColour}{HTML}{0D0D6D}			% też ładny: {1E1E5C}
+
+\hypersetup{colorlinks=true}
+\hypersetup{linkcolor=ourLinksColour}		% kolorowe linki
+
