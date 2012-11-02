@@ -10,9 +10,10 @@ doc/*
 
 # Eclipse trash #
 ###################
-.classpath
-.project
-.settings
+# necessary for initial eclipse project setup
+# .classpath
+# .project
+# .settings
 
 # Compiled source #
 ###################
