@@ -4,7 +4,7 @@
 
 \usepackage{./mystyle}
 
-
+\newcommand\bigforall{\mbox{\Large $\mathsurround0pt\forall$}} 
 \begin{document}
 
 % na potrzeby strony tytułowej robimy taki nagłówek : 
@@ -65,8 +65,8 @@ Skład zespołu:\end{Large}
 
 \onehalfspacing
 
-\rhead{\scriptsize{Maria}}
-\lhead{\scriptsize{Bylica, Danek, Krzystek, Mazur}}
+%\rhead{\scriptsize{Maria}}
+\lhead{\scriptsize{Wałaszewska, Szalecki, Krzystek, Wilaszek}}
 
 \lfoot{\scriptsize{Copyright \textcopyright 2012 AGH}}
 \cfoot{\normalsize Strona \thepage \ z \pageref{LastPage}}
@@ -99,7 +99,22 @@ osoby (tych osób) lub odpowiednich władz AGH.
 \chapter{Tematyka projektu}
 
 \chapter{Opis problemu}
-
+\section{Definicja}
+W ramach projektów zajmiemy się rozwiązywaniem wielowymiarowego problemu plecakowego.
+Problem ten zdefiniowany jest następująco.\\
+Dany jest zbiór $n$ przedmiotów. $j$-ty przedmiot $1 \le j \le n$
+opisany jest przez swoją wartość~$p_j$ oraz ciąg wag
+$(w_{1j}, w_{2j}, \dots, w_{mj})$, gdzie $m$ to liczba wymiarów.\\
+Ponadto dany jest ciąg ogarniczeń plecaka $(W_1, W_2, \dots, W_m)$.\\
+Zadanie polega na zmaksymalizowaniu sumy
+$$ \sum_{j=1}^n p_j\chi_j$$
+przy jednoczesnym zachowaniu nierówności
+$$\bigforall_{1 \le i \le m}\quad\sum_{j=1}^n w_{ij}\chi_j \le W_i$$
+gdzie $\chi_j \in \{0, 1\}$, a wartość $\chi_j=1$
+oznacza użycie $j$-tego przedmiotu.
+\section{Wyjaśnienie}
+Nie należy mylnie utożsamiać wymiarów w problemie plecakowym z 
+wymiarami przestrzeni.
 \chapter{Opis algorytmu}
 
 \chapter{Opis aplikacji}
@@ -124,6 +139,8 @@ osoby (tych osób) lub odpowiednich władz AGH.
 	Chacon, Scott
 	\emph{Pro Git} dostępna na licencji Creative Commons \\
 	\href{http://git-scm.com/book}{wersja online} (Pro Git jest częścią oficjalnej dokumentacji Git'a: \href{http://git-scm.com/documentation}{link})
+\bibitem{enwiki}
+	\href{http://en.wikipedia.org/wiki/List_of_knapsack_problems}{http://en.wikipedia.org/wiki/List\_of\_knapsack\_problems}
 
 \end{thebibliography}
 
