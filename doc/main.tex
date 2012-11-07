@@ -100,8 +100,9 @@ osoby (tych osób) lub odpowiednich władz AGH.
 
 \chapter{Opis problemu}
 \section{Definicja}
-W ramach projektów zajmiemy się rozwiązywaniem wielowymiarowego problemu plecakowego.
-Problem ten zdefiniowany jest następująco.\\
+W ramach projektu zajmiemy się rozwiązywaniem wielowymiarowego problemu plecakowego.
+Problem ten zdefiniowany jest następująco.
+
 Dany jest zbiór $n$ przedmiotów. $j$-ty przedmiot $1 \le j \le n$
 opisany jest przez swoją wartość~$p_j$ oraz ciąg wag
 $(w_{1j}, w_{2j}, \dots, w_{mj})$, gdzie $m$ to liczba wymiarów.\\
@@ -110,12 +111,31 @@ Zadanie polega na zmaksymalizowaniu sumy
 $$ \sum_{j=1}^n p_j\chi_j$$
 przy jednoczesnym zachowaniu nierówności
 $$\bigforall_{1 \le i \le m}\quad\sum_{j=1}^n w_{ij}\chi_j \le W_i$$
-gdzie $\chi_j \in \{0, 1\}$, a wartość $\chi_j=1$
+gdzie $\chi_j \in \{0, 1\}$, wartość $\chi_j=1$
 oznacza użycie $j$-tego przedmiotu.
+
 \section{Wyjaśnienie}
 Nie należy mylnie utożsamiać wymiarów w problemie plecakowym z 
-wymiarami przestrzeni.
-\chapter{Opis algorytmu}
+wymiarami przestrzeni. Intuicyjnie problem można rozumieć jako zadanie
+zapakowania plecaka tak, aby sumaryczna wartość (cena)
+przedmiotów była jak największa.
+Przy pakowaniu należy uwzględnić $m$ \textbf{niezależnych od siebie}
+ograniczeń. W rzeczywistości takimi ogarniczeniami mogą być np. waga,
+objętość, zawartość nadsiarczanu potasu.
+
+Przedmiot jest opisany przez
+rozmiar w każdym z wymiarów oraz wartość (cenę). Ograniczenie plecaka
+$W_i$ oznacza, że suma rozmiarów zapakowanych przedmiotów w $i$-tym
+wymiarze nie może przekroczyć $W_i$.
+
+Analizowany problem nie uwzględnia położenia przedmiotów w plecaku
+ani ich geometrycznych własności. Jest to konsekwencja tego, że każdy
+wymiar rozpatrujemy osobno. Dlatego nie można myśleć o rozmiarach
+przedmiotu jak o rozmiarach geometrycznych.
+
+\chapter{Algorytm pszczeli}
+\section{Opis idei algorytmu}
+\section{Implementacja rozwiązująca problem plecakowy}
 
 \chapter{Opis aplikacji}
 \section{Podręcznik użytkownika}
