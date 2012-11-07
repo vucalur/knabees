@@ -1,6 +1,7 @@
 doc/*
 % nie dodawać śledzenia pdfa wynikowego ! za to ręce urywam
-!doc/images/*
+!doc/images/
+!doc/images/agh_crop.pdf
 !doc/Makefile
 !doc/*.tex
 !doc/*.sty
