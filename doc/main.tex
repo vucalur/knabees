@@ -98,7 +98,7 @@ osoby (tych osób) lub odpowiednich władz AGH.
 
 \chapter{Tematyka projektu}
 
-\chapter{Opis problemu}
+\chapter{Wielowymiarowy problem plecakowy}
 \section{Definicja}
 W ramach projektu zajmiemy się rozwiązywaniem wielowymiarowego problemu plecakowego.
 Problem ten zdefiniowany jest następująco.
@@ -114,7 +114,7 @@ $$\bigforall_{1 \le i \le m}\quad\sum_{j=1}^n w_{ij}\chi_j \le W_i$$
 gdzie $\chi_j \in \{0, 1\}$, wartość $\chi_j=1$
 oznacza użycie $j$-tego przedmiotu.
 
-\section{Wyjaśnienie}
+\section{Intuicja}
 Nie należy mylnie utożsamiać wymiarów w problemie plecakowym z 
 wymiarami przestrzeni. Intuicyjnie problem można rozumieć jako zadanie
 zapakowania plecaka tak, aby sumaryczna wartość (cena)
@@ -132,6 +132,14 @@ Analizowany problem nie uwzględnia położenia przedmiotów w plecaku
 ani ich geometrycznych własności. Jest to konsekwencja tego, że każdy
 wymiar rozpatrujemy osobno. Dlatego nie można myśleć o rozmiarach
 przedmiotu jak o rozmiarach geometrycznych.
+
+\section{Złożoność}
+Wielowymiarowy problem plecakowy dla liczby wymiarów $m \ge 2$ jest
+problemem NP-zupełnym. Tym samym nie znamy rozwiązującego go
+algorytmu o złożoności wielomianowej. Dla uzyskania rozwiązania
+przybliżonego możemy stosować algorytmy aproksymacyjne, np. algorytm
+pszczeli.
+
 
 \chapter{Algorytm pszczeli}
 \section{Opis idei algorytmu}
