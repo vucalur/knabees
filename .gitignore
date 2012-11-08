@@ -3,6 +3,7 @@ doc/*
 !doc/images/
 !doc/images/agh_crop.pdf
 !doc/Makefile
+!doc/README.txt
 !doc/*.tex
 !doc/*.sty
 

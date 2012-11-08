@@ -142,12 +142,34 @@ pszczeli.
 
 \chapter{Algorytm pszczeli}
 \section{Opis idei algorytmu}
-Algorytm pszczeli należy do grupy algorytmów rojowych, czyli algorytmów optymalizacyjnych, których działanie bazuje na właściwościach zaobserwowanych w świecie przyrody. W przypadku algorytmów rojowych zasada działania opiera się na regułach kooperacji w rojach owadów. Zatem zastosowany przez nas algorytm powstał na bazie obserwacji rojów pszczelich, ich metod komunikacji i współpracy. Algorytmy rojowe, jak i podobne do nich metody optymalizacyjne, nie budują jednego i konkretnego rozwiązania, ale bazują na zbiorze rozwiązań, które mogą być przetwarzane równolegle, także wieloprocesowo, wielowątkowo czy też w architekturze rozproszonej. Często są jedynym sposobem rozwiązania problemów, które w klasyczym podejściu mają złożoność obliczeniową przekraczającą możliwości współczesnych komputerów.
+Algorytm pszczeli należy do grupy algorytmów rojowych, czyli algorytmów optymalizacyjnych,
+których działanie bazuje na właściwościach zaobserwowanych w świecie przyrody. W przypadku
+algorytmów rojowych zasada działania opiera się na regułach kooperacji w rojach owadów.
+Zatem zastosowany przez nas algorytm powstał na bazie obserwacji rojów pszczelich, ich metod
+komunikacji i współpracy. Algorytmy rojowe, jak i podobne do nich metody optymalizacyjne,
+nie budują jednego i konkretnego rozwiązania, ale bazują na zbiorze rozwiązań, które mogą być
+przetwarzane równolegle, także wieloprocesowo, wielowątkowo czy też w architekturze rozproszonej.
+Często są jedynym sposobem rozwiązania problemów, które w klasyczym podejściu mają złożoność obliczeniową
+przekraczającą możliwości współczesnych komputerów.
 
-\includegraphics{./images/pszczoly.jpeg}
+\begin{figure}[H] % H - Places the float at precisely the location in the LaTeX code.
+\centering
+\includegraphics[width=1.05\textwidth]{pszczoly.jpeg}
+\caption{Schemat działania pszczół\ldots czy jakoś tak}
+\label{fig:Pszczoly}
+\end{figure}
 
 \subsection{Główne obserwacje}
-Podstawowe założenia algorytmu opierają się na pewnych zasadach zaobserwowanych we współpracy pszczelej kolonii. Pszczoły opuszczeją swoje siedlisko (ul) na spore odległości (klika, a nawet przeszło 10 km) w poszukiwaniu pyłku kwiatów. Organizacja ich wspólpracy wygląda następująco. Wysyłani są pszczeli zwiadowcy, którzy losowo przemierzają pobliskie tereny, zbierając informacje o zasobach. Ważna jest odległość od ula, ilość zasobów oraz oczywiście ich lokalizacja. Posiadając takie informacje, zwiadowca wraca do ula i wykonuje specjalny taniec, który ma poinformować inne pszczoły o wnikach zwiadu. Istotny jest kierunek tańca, który pokazuje lokalizację znalezionych zasobów. Czas trwania tańca oznacza odległość znalezionych zasobów od ule, a intensywność ruchów podczas pokazu świadczy o ilości odnalezionych pyłków kwiatowych. W zależności od zaprezentowanego tańca, odpowiednia część roju udaje się we wskazane miejsce, gdzie zbiera pyłek z kwiatów i wraca do ula. Po powrocie przekazuje reszcie roju aktualne informacje o zasobie, co pozwala na kolejne podejmowania decyzji o oksploatacji zasobów i wysyłaniu w dane miejsce kolejnych pszczół.
+Podstawowe założenia algorytmu opierają się na pewnych zasadach zaobserwowanych we współpracy pszczelej kolonii.
+Pszczoły opuszczeją swoje siedlisko (ul) na spore odległości (klika, a nawet przeszło 10 km) w poszukiwaniu pyłku kwiatów.
+Organizacja ich wspólpracy wygląda następująco. Wysyłani są pszczeli zwiadowcy, którzy losowo przemierzają pobliskie tereny,
+zbierając informacje o zasobach. Ważna jest odległość od ula, ilość zasobów oraz oczywiście ich lokalizacja. Posiadając takie
+informacje, zwiadowca wraca do ula i wykonuje specjalny taniec, który ma poinformować inne pszczoły o wnikach zwiadu. Istotny
+jest kierunek tańca, który pokazuje lokalizację znalezionych zasobów. Czas trwania tańca oznacza odległość znalezionych zasobów
+od ule, a intensywność ruchów podczas pokazu świadczy o ilości odnalezionych pyłków kwiatowych. W zależności od zaprezentowanego
+tańca, odpowiednia część roju udaje się we wskazane miejsce, gdzie zbiera pyłek z kwiatów i wraca do ula. Po powrocie przekazuje
+reszcie roju aktualne informacje o zasobie, co pozwala na kolejne podejmowania decyzji o oksploatacji zasobów i wysyłaniu w dane
+miejsce kolejnych pszczół.
 
 \subsection{Odzwierciedlenie w algorytmie}
 Opisane powyżej mechanizmy przekładają się na strategię algorytmu w różnych jego etapach. Oto podstawowe skojarzania pszczelich zwyczajów w odniesieniu do zadań, które ma wykonać algorytm:
@@ -172,6 +194,15 @@ Można krótko przedstawić ogólny zarys i ideę rozwiązywania problemów algo
 
 \chapter{Opis aplikacji}
 \section{Podręcznik użytkownika}
+\subsection{Format wejścia}
+Plik z danymi wejściowymi problemu plecakowego powinien być następującej postaci. W pierwszej
+linii wejścia znajdują się dwie liczby naturalne $m$, $n$ oznaczające kolejno liczbę wymiarów
+oraz liczbę dostępnych przedmiotów. W drugiej linii wejścia znajduje się $m$~liczb rzeczywistych oddzielonych
+spacjami oznaczających kolejne ograniczenia plecaka. Następne $n$ linii opisuje kolejne przedmioty.
+Pojedyncza linia opisująca $j$-ty~przedmiot składa się z $m+1$~liczb rzeczywistych oddzielonych spacjami.
+Pierwsza z nich to $p_j$~--~wartość (cena)
+przedmiotu. Kolejne $m$ liczb oznacza kolejne rozmiary przedmiotu $w_{ij}$  ($1 \le i \le m$).
+
 \subsection{Instalacja}
 
 \chapter{Podsumowanie}
