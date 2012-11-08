@@ -4,7 +4,6 @@
 
 \usepackage{./mystyle}
 
-\newcommand\bigforall{\mbox{\Large $\mathsurround0pt\forall$}} 
 \begin{document}
 
 % na potrzeby strony tytułowej robimy taki nagłówek : 
@@ -152,29 +151,22 @@ Podstawowe założenia algorytmu opierają się na pewnych zasadach zaobserwowan
 
 \subsection{Odzwierciedlenie w algorytmie}
 Opisane powyżej mechanizmy przekładają się na strategię algorytmu w różnych jego etapach. Oto podstawowe skojarzania pszczelich zwyczajów w odniesieniu do zadań, które ma wykonać algorytm:
-
--- Zbiór przeszukiwanych rozwiązań jako populacja
-
--- Równoległe przetwarzanie rozwiązań jako populacja
-
--- Losowe inicjowanie początkowych rozwiązań jako losowe poszukiwania pszczół-zwiadowców
-
--- Informacja dotycząca funkcji celu rozwiązań jako pszczeli taniec
-
--- Mechanizm selekcji naturalnej, opertatory, sposób przetwarzania rozwiązań jako podział roju pomiędzy obszary
+\begin{itemize}
+	\fe	Zbiór przeszukiwanych rozwiązań jako populacja
+	\fe	Równoległe przetwarzanie rozwiązań jako populacja
+	\fe	Losowe inicjowanie początkowych rozwiązań jako losowe poszukiwania pszczół-zwiadowców
+	\fe	Informacja dotycząca funkcji celu rozwiązań jako pszczeli taniec
+	\fe	Mechanizm selekcji naturalnej, opertatory, sposób przetwarzania rozwiązań jako podział roju pomiędzy obszary
+\end{itemize}
 
 Można krótko przedstawić ogólny zarys i ideę rozwiązywania problemów algorytmem pszczelim:
-
-1. Utworzenie n początkowych populacji i wyznaczenie dla nich wartości funkcji celu.
-
-2. Wybór m przeszukiwanych sąsiedztw i określenie ich wielkości oraz liczności rozwiązań dla nich.
-
-3. Według zadanej wielkości i liczności utworzenie rozwiązań dla każdego z m sąsiedztw oraz wyznaczenie dla nich wartości funkcji celu.
-
-4. Utworzenie nowej populacji n rozwiązań (przez wybór najlepszych rozwiązań dla każdego z n sąsiedztw oraz uzupełnienie brakujących n-m rozwiązań).
-
-5. Jeśli warunki dokładności rozwiązania są sprawdzone, to kończymy. W przeciwnym wypadku: POWRÓT DO 2.
-
+\begin{enumerate}
+	\fe	Utworzenie n początkowych populacji i wyznaczenie dla nich wartości funkcji celu.
+	\fe	Wybór m przeszukiwanych sąsiedztw i określenie ich wielkości oraz liczności rozwiązań dla nich.
+	\fe	Według zadanej wielkości i liczności utworzenie rozwiązań dla każdego z m sąsiedztw oraz wyznaczenie dla nich wartości funkcji celu.
+	\fe	Utworzenie nowej populacji n rozwiązań (przez wybór najlepszych rozwiązań dla każdego z n sąsiedztw oraz uzupełnienie brakujących n-m rozwiązań).
+	\fe	Jeśli warunki dokładności rozwiązania są sprawdzone, to kończymy. W przeciwnym wypadku: POWRÓT DO 2.
+\end{enumerate}
 
 \section{Implementacja rozwiązująca problem plecakowy}
 
