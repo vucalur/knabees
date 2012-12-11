@@ -1,9 +1,6 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Test {
 	private	Item[] items;
@@ -25,7 +22,7 @@ public class Test {
 		for(int i=0;i<dim;++i) {
 			System.out.print(knapsack.getLimit(i)+"\t");
 		}
-		System.out.println("\nThe Choosen Ones:");
+		System.out.println("\nThe Choosen One:");
 		double[] weights = new double[dim];
 		double big_price = 0;
 		for(int i=0;i<items.length;++i) {
@@ -75,40 +72,6 @@ public class Test {
 			new Test(new Scanner(System.in));
 		}
 
-/*		int dimensions = 5;
-		int itemsNumber = 100;
-
-		float limits[] = new float[dimensions];
-		for (int i = 0; i < dimensions; i++) {
-			limits[i] = (float) (5 * Math.random());
-		}
-
-		Item items[] = new Item[itemsNumber];
-		for (int i = 0; i < itemsNumber; i++) {
-			float weight[] = new float[dimensions];
-			for (int j = 0; j < dimensions; j++)
-				weight[j] = (float) (100 * Math.random());
-			items[i] = new Item((float) (25 * Math.random()), weight);
-		}
-
-		Knapsack knapsack = new Knapsack(limits);
-		BeesAlgorithm bA = new BeesAlgorithm(knapsack, items, 500);
-		bA.run();
-		boolean solution[] = bA.getSolution();
-		// System.out.println("Test");
-		int tablica1[][] = new int[][] { { 1, 2, 3 }, { 4, 5, 6 } };
-		int tablica2[][] = new int[][] { { 1, 2, 3 }, { 4, 5, 6 } };
-		System.out.println(tablica1.hashCode() + " " + tablica2.length);
-
-		boolean x[]=new boolean[]{false, false, true,  true, false};
-		boolean y[]=new boolean[]{true, false, true,  true, false};
-		boolean z[]=new boolean[]{true, false, true,  true, false};
-		
-		Map<Integer, Integer> solutionsCount = new HashMap<Integer, Integer>();
-		solutionsCount.put(Arrays.hashCode(x), 12);
-		solutionsCount.put(Arrays.hashCode(y), 33);
-		System.out.println(solutionsCount.get(Arrays.hashCode(z)));
-	*/
 	}
 
 }

@@ -1,7 +1,3 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class BeesAlgorithm {
 	private Knapsack knapsack;
@@ -9,9 +5,8 @@ public class BeesAlgorithm {
 	private boolean solution[];
 	private int dimensions;
 	private int itemsAmount;
-	private int df[];
-	private double probabilityOfElement[];
-	private Map<Integer, Integer> solutionsCount = new HashMap<Integer, Integer>();
+	// private Map<Integer, Integer> solutionsCount = new HashMap<Integer,
+	// Integer>();
 
 	// consts
 	int nBee = 600; // scoutBees
@@ -19,7 +14,7 @@ public class BeesAlgorithm {
 	// int nBest=10;
 	int ngh = 5; // initial size of neighbourhood to search (size of patch)
 	// patch includes Site
-	int nep = 40;// number of bees recruted for the selected sites
+	int nep = 40;// number of bees recruited for the selected sites
 
 	int alpha = 1;
 	int beta = 1;
@@ -37,15 +32,20 @@ public class BeesAlgorithm {
 	// consts-end
 	int maxIterations; // =500
 
+	int visitedCount[];
+
+	private int df(int j) {
+		return visitedCount[j];
+	}
+
 	public BeesAlgorithm(Knapsack knapsack, Item[] items, int maxIterations) {
 		dimensions = knapsack.getDimension();
 		itemsAmount = items.length;
 		this.knapsack = knapsack;
 		this.items = items;
 		this.solution = new boolean[itemsAmount];
-		probabilityOfElement = new double[itemsAmount];
-		df = new int[itemsAmount];
 		this.maxIterations = maxIterations;
+		visitedCount = new int[itemsAmount];
 	}
 
 	private double itemsWeightSum(boolean matrix[], int dimension) {
@@ -72,22 +72,43 @@ public class BeesAlgorithm {
 		return true;
 	}
 
-	private double[] evaluateProbability(double alpha, double beta, double gamma) {
+	private double evaluateProbability(int j, double fj, double alpha, double beta,
+			double gamma) {
 		double maxC = maxC();
 		double maxSPrim = maxSPrim();
-		double fj = 1.0f;
-		double maxDF = 1.0f;
-		double DUZA_SUMA = 2.0f;
-		double probability[] = new double[itemsAmount];
-		for (int j = 0; j < itemsAmount; j++)
-			probability[j] = (double) (fj * Math.pow(maxDF / df[j], gamma)
-					* Math.pow(items[j].getValue() / maxC, alpha) / Math.pow(
-					DUZA_SUMA / maxSPrim, beta));
-		return probability;
+		double maxDF = maxDF();
+		double duzaSuma = 0.0;
+
+		for (int i = 0; i < dimensions; i++) {
+			duzaSuma += (items[j].getWeight(i) / (b(i) * b(i)));
+		}
+		return (double) (fj * Math.pow(maxDF / df(j), gamma)
+				* Math.pow(items[j].getValue() / maxC, alpha) / Math.pow(
+				duzaSuma / maxSPrim, beta));
+	}
+
+	private int maxDF() {
+		int max = 0;
+		int actual;
+		for (int i = 0; i < itemsAmount; i++) {
+			actual = df(i);
+			max = actual > max ? actual : max;
+		}
+		return max;
 	}
 
 	private double maxSPrim() {
-		return 0.0f;//TODO
+		double max = 0;
+		double sum;
+		for (int j = 0; j < itemsAmount; j++) {
+			sum = 0;
+			for (int i = 0; i < dimensions; i++) {
+				sum += (items[j].getWeight(i) / (b(i) * b(i)));
+			}
+			max = sum > max ? sum : max;
+		}
+
+		return max;
 	}
 
 	private double maxC() {
@@ -98,23 +119,15 @@ public class BeesAlgorithm {
 		return maximum;
 	}
 
-	// increment number of visited solution
-	private void countSolution(boolean[] solution) {
-		Integer hashCode = Arrays.hashCode(solution);
-		Integer count = solutionsCount.containsKey(hashCode) ? solutionsCount
-				.get(hashCode) : 0;
-		solutionsCount.put(hashCode, ++count);
-		for(int i=0;i<solution.length;++i) {
-			df[i] += solution[i] ? 1 : 0;
+	double b(int i) {
+		double sum = 0;
+		for (Item it : items) {
+			sum += it.getWeight(i);
 		}
-	}
-	
-	private Set<Integer> evaluateJk(Set<Integer> Jx) {
-		
-		return null;
+		return sum;
 	}
 
-	// może jednak trochę zachłana?
+
 	private boolean[] randomizeSolution() {
 		int elementNumber;
 		boolean solution[] = new boolean[itemsAmount];
