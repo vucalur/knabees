@@ -21,7 +21,7 @@
   \vspace{4ex}
   \begin{large}KATEDRA INFORMATYKI\end{large} \\
   \vspace{8ex}
-  \textbf{\begin{Huge}Problem plecakowy\end{Huge}} \\
+  \textbf{\begin{Huge}Wielowymiarowy problem plecakowy\end{Huge}} \\
   \vspace{3ex}
   \textit{\begin{Large}Algorytm pszczeli\end{Large}} \\
 
@@ -152,45 +152,71 @@ przetwarzane równolegle, także wieloprocesowo, wielowątkowo czy też w archit
 Często są jedynym sposobem rozwiązania problemów, które w klasyczym podejściu mają złożoność obliczeniową
 przekraczającą możliwości współczesnych komputerów.
 
-\begin{figure}[H] % H - Places the float at precisely the location in the LaTeX code.
-\centering
-\includegraphics[width=1.05\textwidth]{pszczoly.jpeg}
-\caption{Schemat działania pszczół\ldots czy jakoś tak}
-\label{fig:Pszczoly}
-\end{figure}
+%\begin{figure}[H] % H - Places the float at precisely the location in the LaTeX code.
+%\centering
+%\includegraphics[width=1.05\textwidth]{pszczoly.jpeg}
+%\caption{Schemat działania pszczół\ldots czy jakoś tak}
+%\label{fig:Pszczoly}
+%\end{figure}
 
 \subsection{Główne obserwacje}
 Podstawowe założenia algorytmu opierają się na pewnych zasadach zaobserwowanych we współpracy pszczelej kolonii.
-Pszczoły opuszczeją swoje siedlisko (ul) na spore odległości (klika, a nawet przeszło 10 km) w poszukiwaniu pyłku kwiatów.
+Pszczoły opuszczeją swoje siedlisko, ul, na spore odległości w poszukiwaniu pyłku kwiatów.
 Organizacja ich wspólpracy wygląda następująco. Wysyłani są pszczeli zwiadowcy, którzy losowo przemierzają pobliskie tereny,
 zbierając informacje o zasobach. Ważna jest odległość od ula, ilość zasobów oraz oczywiście ich lokalizacja. Posiadając takie
-informacje, zwiadowca wraca do ula i wykonuje specjalny taniec, który ma poinformować inne pszczoły o wnikach zwiadu. Istotny
-jest kierunek tańca, który pokazuje lokalizację znalezionych zasobów. Czas trwania tańca oznacza odległość znalezionych zasobów
-od ule, a intensywność ruchów podczas pokazu świadczy o ilości odnalezionych pyłków kwiatowych. W zależności od zaprezentowanego
+informacje, zwiadowca wraca do ula i wykonuje specjalny taniec, który ma poinformować inne pszczoły o wnikach zwiadu.
+Kierunek tańca pokazuje lokalizację znalezionych zasobów. Czas trwania tańca oznacza odległość znalezionych zasobów
+od ula, a intensywność ruchów podczas pokazu świadczy o ilości odnalezionych pyłków kwiatowych. W zależności od zaprezentowanego
 tańca, odpowiednia część roju udaje się we wskazane miejsce, gdzie zbiera pyłek z kwiatów i wraca do ula. Po powrocie przekazuje
 reszcie roju aktualne informacje o zasobie, co pozwala na kolejne podejmowania decyzji o oksploatacji zasobów i wysyłaniu w dane
 miejsce kolejnych pszczół.
 
 \subsection{Odzwierciedlenie w algorytmie}
-Opisane powyżej mechanizmy przekładają się na strategię algorytmu w różnych jego etapach. Oto podstawowe skojarzania pszczelich zwyczajów w odniesieniu do zadań, które ma wykonać algorytm:
-\begin{itemize}
-	\fe	Zbiór przeszukiwanych rozwiązań jako populacja
-	\fe	Równoległe przetwarzanie rozwiązań jako populacja
-	\fe	Losowe inicjowanie początkowych rozwiązań jako losowe poszukiwania pszczół-zwiadowców
-	\fe	Informacja dotycząca funkcji celu rozwiązań jako pszczeli taniec
-	\fe	Mechanizm selekcji naturalnej, opertatory, sposób przetwarzania rozwiązań jako podział roju pomiędzy obszary
-\end{itemize}
+Opisane powyżej mechanizmy przekładają się na strategię algorytmu w różnych jego etapach.
+Oto podstawowe skojarzania pszczelich zwyczajów w odniesieniu do zadań, które ma wykonać algorytm:\\
+
+\begin{tabular}{|l|l|}
+\hline
+Element pszczelej kolonii & Odzwierciedlenie w algorytmie \\
+\hline
+Teren wokół ula & Zbiór możliwych rozwiązań \\
+Lokalizacja nektaru & Pewne rozwiązanie \\
+Ilość nektaru & Wartość funkcji celu \\
+Pszczoły-zwiadowcy & Losowo inicjowane początkowe rozwiązania \\
+Populacja pszczół & Przeszukiwanie sąsiedztwa danego rozwiązania \\
+Zużycie się zasobów & Porzucanie lokalnych maksimów po \\
+& przeszukaniu pewnej ilości sąsiedztw \\
+\hline
+\end{tabular}\\
 
 Można krótko przedstawić ogólny zarys i ideę rozwiązywania problemów algorytmem pszczelim:
 \begin{enumerate}
-	\fe	Utworzenie n początkowych populacji i wyznaczenie dla nich wartości funkcji celu.
-	\fe	Wybór m przeszukiwanych sąsiedztw i określenie ich wielkości oraz liczności rozwiązań dla nich.
+	\fe	Utworzenie $n$ początkowych populacji i wyznaczenie dla nich wartości funkcji celu.
+	\fe	Wybór $m$ przeszukiwanych sąsiedztw i określenie ich wielkości oraz liczności rozwiązań dla nich.
 	\fe	Według zadanej wielkości i liczności utworzenie rozwiązań dla każdego z m sąsiedztw oraz wyznaczenie dla nich wartości funkcji celu.
-	\fe	Utworzenie nowej populacji n rozwiązań (przez wybór najlepszych rozwiązań dla każdego z n sąsiedztw oraz uzupełnienie brakujących n-m rozwiązań).
-	\fe	Jeśli warunki dokładności rozwiązania są sprawdzone, to kończymy. W przeciwnym wypadku: POWRÓT DO 2.
+	\fe	Utworzenie nowej populacji $n$ rozwiązań (przez wybór najlepszych rozwiązań dla każdego z $n$ sąsiedztw oraz uzupełnienie brakujących $n-m$ rozwiązań).
+	\fe	Jeśli spełniony jest warunek stopu, to kończymy. W przeciwnym wypadku: POWRÓT DO 2.
 \end{enumerate}
 
-\section{Implementacja rozwiązująca problem plecakowy}
+\chapter{Implementacja rozwiązująca wielowymiarowy problem plecakowy}
+\section{Dane}
+Danymi wejściowymi dla algorytmu są:
+\begin{itemize}
+\item Instancja problemu plecakowego -- oznaczenia jak w definicji
+\item Parametry sterujące algorytmem
+\begin{itemize}
+\item $nBee$ ilość rozpatrywanych rozwiązań (dostępnych pszczół)
+\item $nSite$ ilość najlepszych rozwiązań wybranych do przeszukiwania sąsiedztwa
+\item $ngh$ rozmiar przeszukiwanego sąsiedztwa
+\item $nep$ ilość pszczół przeznaczona do przeszukiwania sąsiedztw
+\item $maxIterations$ liczba iteracji
+\end{itemize}
+\end{itemize}
+%\section{Algorytm}
+%Algorytm przedstawiony przy pomocy pseudokodu:
+%\begin{enumerate}
+%	\fe	
+%\end{enumerate}
 
 \chapter{Opis aplikacji}
 \section{Podręcznik użytkownika}
