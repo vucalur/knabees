@@ -7,6 +7,7 @@ public class Test {
 	private Knapsack knapsack;
 
 	public Test(Scanner sc) {
+		System.out.println("START!");
 		if(!readInput(sc)) {
 			System.out.println("Wrong input!");
 			return;
@@ -57,7 +58,8 @@ public class Test {
 					weights[i] = s.nextDouble();
 				items[j] = new Item(price, weights);
 			}
-		} catch(Exception e) { return false; }
+		} catch(Exception e) { e.printStackTrace(); return false; }
+		System.out.println("Input ok.");
 		return true;
 	}
 
