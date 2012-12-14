@@ -197,16 +197,17 @@ public class BeesAlgorithm {
 		return false;
 	}
 
-	private boolean[] breakSet(boolean S[]) {
+	private boolean[] safeSet(boolean S[]) {
 		boolean[] retSet = new boolean[itemsAmount];
 		boolean[] tempSet = Arrays.copyOf(S, S.length);
 		for (int i = 0; i < itemsAmount; i++) {
-			tempSet[i] = true;
-			if (!checkSolution(tempSet)) {
-				retSet[i] = true;
+			if(!tempSet[i]) {
+				tempSet[i] = true;
+				if (checkSolution(tempSet)) {
+					retSet[i] = true;
+				}
+				tempSet[i] = false;
 			}
-			tempSet[i] = false;
-
 		}
 		return retSet;
 	}
@@ -221,19 +222,12 @@ public class BeesAlgorithm {
 				fj[i] = probability0;
 			else
 				fj[i] = probability1;
-			S[i] = true;
 		}
-
-		boolean[] breakSet;
-
+		S = safeSet(x);
 		while (setNotEmpty(S)) {
 			t = rws(fj, S, alpha, beta, gamma);
 			x[t] = true;
-			breakSet = breakSet(x); //TODO, what the hell
-			for (int i = 0; i < itemsAmount; i++) {
-				if (i == t || breakSet[i])
-					S[i] = false;
-			}
+			S = safeSet(x);
 		}
 		return x;
 	}
@@ -281,33 +275,21 @@ public class BeesAlgorithm {
 			if (Jk[i])
 				x[i] = false;
 
-		for (int j = 0; j < itemsAmount; j++) {
+		/*for (int j = 0; j < itemsAmount; j++) {
 			if (Jk[j])
 				pj[j] = evaluateProbability(j, prob0prim, alphaPrim, betaPrim,
 						gammaPrim);
 			else
 				pjprim[j] = evaluateProbability(j, prob1prim, alphaPrim,
 						betaPrim, gammaPrim);
-		}
-		boolean[] S = new boolean[itemsAmount];
-		for (int i = 0; i < itemsAmount; i++) {
-			if (!x[i]) {
-				boolean[] tmpSol = Arrays.copyOf(x,itemsAmount);
-				tmpSol[i]=true;
-				if(checkSolution(tmpSol))
-					S[i] = true;
-			}
-		}
+		}*/
+
+		boolean[] S = safeSet(x);
 		while (setNotEmpty(S)) {
 			int t = rws(prob0prim, S, alphaPrim, betaPrim, gammaPrim);
 			x[t] = true;
-			S[t] = false;
 			if(!checkSolution(x)) throw new RuntimeException();
-			boolean[] breakset = breakSet(x);
-			for (int i = 0; i < itemsAmount; i++) {
-				if (breakset[i])
-					S[i] = false;
-			}
+			S = safeSet(x);
 		}
 		return x;
 
