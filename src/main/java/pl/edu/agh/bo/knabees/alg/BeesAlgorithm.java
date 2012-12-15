@@ -1,9 +1,10 @@
+package pl.edu.agh.bo.knabees.alg;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
-
 
 public class BeesAlgorithm {
 	private Knapsack knapsack;
@@ -51,7 +52,7 @@ public class BeesAlgorithm {
 		itemsAmount = items.length;
 		this.knapsack = knapsack;
 		this.items = items;
-//		this.maxIterations = maxIterations;//TODO
+		// this.maxIterations = maxIterations;//TODO
 		this.maxIterations = 20;
 		visitedCount = new int[itemsAmount];
 		rand = new Random();
@@ -83,8 +84,7 @@ public class BeesAlgorithm {
 		return true;
 	}
 
-	private double evaluateProbability(int j, double[] fj, double alpha,
-			double beta, double gamma) {
+	private double evaluateProbability(int j, double[] fj, double alpha, double beta, double gamma) {
 		double maxC = maxC();
 		double maxSPrim = maxSPrim();
 		double maxDF = maxDF();
@@ -93,13 +93,10 @@ public class BeesAlgorithm {
 		for (int i = 0; i < dimensions; i++) {
 			duzaSuma += (items[j].getWeight(i) / (b(i) * b(i)));
 		}
-		double test=
-		/*return*/ (double) (fj[j] * Math.pow(maxDF / df(j), gamma)
-				* Math.pow(items[j].getValue() / maxC, alpha) / Math.pow(
-				duzaSuma / maxSPrim, beta));
-//		System.out.println(test);
-//		return test;
-		return 1;//TODO
+		double test = fj[j] * Math.pow(maxDF / df(j), gamma) * Math.pow(items[j].getValue() / maxC, alpha) / Math.pow(duzaSuma / maxSPrim, beta);
+		// System.out.println(test);
+		// return test;
+		return 1;// TODO
 	}
 
 	private int maxDF() {
@@ -126,7 +123,7 @@ public class BeesAlgorithm {
 		return max;
 	}
 
-	private double maxC() { //TODO
+	private double maxC() { // TODO
 		double maximum = items[0].getValue();
 		for (int i = 1; i < itemsAmount; i++)
 			if (items[i].getValue() > maximum)
@@ -160,13 +157,12 @@ public class BeesAlgorithm {
 		double probabilitySum = 0, p = 0;
 		double randomNumber;
 		for (int i = 0; i < itemsAmount; i++)
-			probabilitySum += items[i] ? evaluateProbability(i, fj, alpha,
-					beta, gamma) : 0;
+			probabilitySum += items[i] ? evaluateProbability(i, fj, alpha, beta, gamma) : 0;
 		randomNumber = Math.random() * probabilitySum;
-		//System.out.println(probabilitySum);
+		// System.out.println(probabilitySum);
 		for (int i = 0; i < itemsAmount; i++) {
 			p += items[i] ? evaluateProbability(i, fj, alpha, beta, gamma) : 0;
-			
+
 			if (p >= randomNumber)
 				return i;
 		}
@@ -177,12 +173,10 @@ public class BeesAlgorithm {
 		double probabilitySum = 0, p = 0;
 		double randomNumber;
 		for (int i = 0; i < itemsAmount; i++)
-			probabilitySum += items[i] ? 1.0/evaluateProbability(i, fj, alpha,
-					beta, gamma) : 0;
+			probabilitySum += items[i] ? 1.0 / evaluateProbability(i, fj, alpha, beta, gamma) : 0;
 		randomNumber = Math.random() * probabilitySum;
 		for (int i = 0; i < itemsAmount; i++) {
-			p += items[i] ? 1.0 / evaluateProbability(i, fj, alpha, beta, gamma)
-					: 0;
+			p += items[i] ? 1.0 / evaluateProbability(i, fj, alpha, beta, gamma) : 0;
 			if (p >= randomNumber)
 				return i;
 		}
@@ -201,7 +195,7 @@ public class BeesAlgorithm {
 		boolean[] retSet = new boolean[itemsAmount];
 		boolean[] tempSet = Arrays.copyOf(S, S.length);
 		for (int i = 0; i < itemsAmount; i++) {
-			if(!tempSet[i]) {
+			if (!tempSet[i]) {
 				tempSet[i] = true;
 				if (checkSolution(tempSet)) {
 					retSet[i] = true;
@@ -242,7 +236,7 @@ public class BeesAlgorithm {
 		int t;
 		while (powerOfSet(Jk) < k) {
 			t = rws2(fj, S, alphaBis, betaBis, gammaBis);
-			if(t==-1)
+			if (t == -1)
 				break;
 			Jk[t] = true;
 			S[t] = false;
@@ -275,20 +269,19 @@ public class BeesAlgorithm {
 			if (Jk[i])
 				x[i] = false;
 
-		/*for (int j = 0; j < itemsAmount; j++) {
-			if (Jk[j])
-				pj[j] = evaluateProbability(j, prob0prim, alphaPrim, betaPrim,
-						gammaPrim);
-			else
-				pjprim[j] = evaluateProbability(j, prob1prim, alphaPrim,
-						betaPrim, gammaPrim);
-		}*/
+		/*
+		 * for (int j = 0; j < itemsAmount; j++) { if (Jk[j]) pj[j] =
+		 * evaluateProbability(j, prob0prim, alphaPrim, betaPrim, gammaPrim);
+		 * else pjprim[j] = evaluateProbability(j, prob1prim, alphaPrim,
+		 * betaPrim, gammaPrim); }
+		 */
 
 		boolean[] S = safeSet(x);
 		while (setNotEmpty(S)) {
 			int t = rws(prob0prim, S, alphaPrim, betaPrim, gammaPrim);
 			x[t] = true;
-			if(!checkSolution(x)) throw new RuntimeException();
+			if (!checkSolution(x))
+				throw new RuntimeException();
 			S = safeSet(x);
 		}
 		return x;
@@ -302,31 +295,32 @@ public class BeesAlgorithm {
 		for (int i = 0; i < nBee; i++) {
 			solutions.add(randomizeSolution());
 		}
-		
+
 		for (int nIteration = 1; nIteration <= maxIterations; nIteration++) {
 			Collections.sort(solutions, new Comparator<boolean[]>() {
 				@Override
 				public int compare(boolean[] s1, boolean[] s2) {
 					double c = itemsValue(s1) - itemsValue(s2);
-					return c>0?-1:(c<0?1:0);
+					return c > 0 ? -1 : (c < 0 ? 1 : 0);
 				}
 			});
 			System.out.print("Posortowane:");
-			for(int f=0;f<solutions.size();++f)
+			for (int f = 0; f < solutions.size(); ++f)
 				System.out.print(" " + itemsValue(solutions.get(f)));
 			System.out.println();
 			ArrayList<boolean[]> newSolutions = new ArrayList<boolean[]>();
-			if(solution == null || itemsValue(solutions.get(0))>itemsValue(solution))
+			if (solution == null || itemsValue(solutions.get(0)) > itemsValue(solution))
 				solution = solutions.get(0);
 
-			for(int i=0;i<nSite;++i) {
+			for (int i = 0; i < nSite; ++i) {
 				newSolutions.add(solutions.get(i));
-				for(int j=0;j<nep;++j) {
+				for (int j = 0; j < nep; ++j) {
 					newSolutions.add(solutionFromNeighbourhood(solutions.get(i), ngh));
 				}
-			}//maybe we should delete identical solutions from solution list, shouldn't we?
-			for(int i=0;i<nBee-nSite*nep;++i) {
-				newSolutions.add(generateSolution());				
+			}// maybe we should delete identical solutions from solution list,
+				// shouldn't we?
+			for (int i = 0; i < nBee - nSite * nep; ++i) {
+				newSolutions.add(generateSolution());
 			}
 			solutions = newSolutions;
 			System.out.println(nIteration);

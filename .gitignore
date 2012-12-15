@@ -17,6 +17,11 @@ doc/*
 # .project
 # .settings
 
+# Maven build directotries #
+###################
+target/*
+
+
 # Compiled source #
 ###################
 *.com

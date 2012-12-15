@@ -1,3 +1,5 @@
+package pl.edu.agh.bo.knabees.alg;
+
 public class Item {
 	private double value;
 	private double weights[];
