@@ -3,45 +3,28 @@ package pl.edu.agh.bo.knabees.communication;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.edu.agh.bo.knabees.objects.Item;
-import pl.edu.agh.bo.knabees.objects.Knapsack;
+/**
+ * Class extending {@link Observable} must construct proper data for observers
+ * (data is shared, hence it should be immutable) and invoke
+ * notifyAllObservers()
+ * 
+ * @param <T>
+ *            Type of Data being send to observers
+ */
+public abstract class Observable<T> {
+	private List<Observer<T>> observers = new ArrayList<Observer<T>>();
 
-public class Observable {
-	private List<Observer<Item>> itemsObservers = new ArrayList<>();
-	private List<Observer<Knapsack>> knapsacksObservers = new ArrayList<>();
-
-	protected void notifyItemsObservers(List<? extends Item> changed) {
-		for (Observer<Item> o : itemsObservers) {
-			o.notifyMe(changed);
+	protected void notifyAllObservers(T data) {
+		for (Observer<T> observer : observers) {
+			observer.notifyMe(data);
 		}
 	}
 
-	protected void notifyKnapsacksObservers(List<? extends Knapsack> changed) {
-		for (Observer<Knapsack> o : knapsacksObservers) {
-			o.notifyMe(changed);
-		}
+	public boolean addItemsObserver(Observer<T> observer) {
+		return observers.add(observer);
 	}
 
-	public boolean addItemsObserver(Observer<Item> o) {
-		return addObserver(o, itemsObservers);
-	}
-
-	public boolean addKnapsacksObserver(Observer<Knapsack> o) {
-		return addObserver(o, knapsacksObservers);
-	}
-
-	private <T> boolean addObserver(Observer<T> o, List<? super Observer<T>> observers) {
-		if (o == null || observers == null) {
-			throw new IllegalArgumentException();
-		}
-		if (observers.contains(o)) {
-			return false;
-		} else {
-			return observers.add(o);
-		}
-	}
-
-	public <T> boolean removeObserver(Observer<T> o) {
-		return itemsObservers.remove(o) | knapsacksObservers.remove(o);
+	public boolean removeObserver(Observer<T> observer) {
+		return observers.remove(observer);
 	}
 }

@@ -1,22 +1,21 @@
 package pl.edu.agh.bo.knabees.utils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.DefaultListModel;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+
+import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
+import pl.edu.agh.bo.knabees.communication.FileParsingException;
+import pl.edu.agh.bo.knabees.objects.Item;
+import pl.edu.agh.bo.knabees.objects.Knapsack;
 
 public class Utils {
-	private static final org.apache.log4j.Logger LOG = Logger.getLogger(Utils.class);
+	private static final org.apache.log4j.Logger logger = Logger.getLogger(Utils.class);
 
 	public static <T> void removeSelection(DefaultListModel<T> listModel, int[] selectedIndices) {
 		int[] selectedIndicesAscending = selectedIndices;
@@ -26,30 +25,38 @@ public class Utils {
 		}
 	}
 
-	public static List<List<Integer>> readNumbers(File file) {
-		Path path = file.toPath();
-		LOG.log(Priority.INFO, "Opening: " + path.getFileName() + ".");
-		List<List<Integer>> lines = new ArrayList<>();
-		try (BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset())) {
-			String line;
-			while ((line = reader.readLine()) != null) {
-				if (line.trim().isEmpty()) {
-					continue;
-				}
-				List<Integer> lineNumbers = new ArrayList<>();
-				for (String token : line.split("\\s+")) {
-					try {
-						lineNumbers.add(Integer.parseInt(token));
-					} catch (NumberFormatException e) {
-						LOG.log(Priority.INFO, "Incorrect input: " + token);
-					}
-				}
-				lines.add(lineNumbers);
-			}
-		} catch (IOException x) {
-			LOG.log(Priority.ERROR, "IOException: %s%n", x);
-		}
+	public static BeesAlgorithm.Builder readItemsAndKnapsackData(File file) throws FileParsingException {
+		logger.info("Opening: " + file.getPath() + ".");
 
-		return lines;
+		try {
+			return readItemsAndKnapsackData(new Scanner(file));
+		} catch (FileNotFoundException e) {
+			throw new FileParsingException();
+		}
+	}
+
+	public static BeesAlgorithm.Builder readItemsAndKnapsackData(Scanner s) throws FileParsingException {
+		BeesAlgorithm.Builder result;
+		try {
+			int m = s.nextInt();
+			int n = s.nextInt();
+			double[] limits = new double[m];
+			for (int i = 0; i < m; ++i)
+				limits[i] = s.nextDouble();
+			Item[] items = new Item[n];
+			result = new BeesAlgorithm.Builder(new Knapsack(limits), items);
+			for (int j = 0; j < n; ++j) {
+				double price = s.nextDouble();
+				double[] weights = new double[m];
+				for (int i = 0; i < m; ++i)
+					weights[i] = s.nextDouble();
+				items[j] = new Item(price, weights);
+			}
+		} catch (Exception e) {
+			throw new FileParsingException();
+		} finally {
+			s.close();
+		}
+		return result;
 	}
 }

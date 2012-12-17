@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 
-public class BeesAlgorithm {
+import pl.edu.agh.bo.knabees.communication.IterationData;
+import pl.edu.agh.bo.knabees.communication.Observable;
+import pl.edu.agh.bo.knabees.objects.Item;
+import pl.edu.agh.bo.knabees.objects.Knapsack;
+
+public class BeesAlgorithm extends Observable<IterationData> {
 	private Knapsack knapsack;
 	private Item[] items;
 	private boolean solution[];
@@ -16,48 +22,134 @@ public class BeesAlgorithm {
 	// Integer>();
 
 	// consts
-	int nBee = 30; // scoutBees
-	int nSite = 5; // sites
-	int nBest = 2;
-	int ngh = 2; // initial size of neighbourhood to search (size of patch)
+	private int nBee;// scoutBees
+	private int nSite; // sites
+	private int nBest = 2;
+	private int ngh;// initial size of neighbourhood to search (size of
+					// patch)
 	// patch includes Site
-	int nep = 2;// number of bees recruited for the selected sites
+	private int nep;// number of bees recruited for the selected sites
 
-	int alpha = 1;
-	int beta = 1;
-	int gamma = 2;
-	int alphaPrim = 1;
-	int betaPrim = 1;
-	int gammaPrim = 1;
-	int alphaBis = 2;
-	int betaBis = 1;
-	int gammaBis = 0;
-	double probability0 = 0.2f;
-	double probability1 = 0.8f;
-	double probability0Prim = 0.1f;
-	double probability1Prim = 0.9f;
+	private int alpha = 1;
+	private int beta = 1;
+	private int gamma = 2;
+	private int alphaPrim = 1;
+	private int betaPrim = 1;
+	private int gammaPrim = 1;
+	private int alphaBis = 2;
+	private int betaBis = 1;
+	private int gammaBis = 0;
+	private double probability0 = 0.2f;
+	private double probability1 = 0.8f;
+	private double probability0Prim = 0.1f;
+	private double probability1Prim = 0.9f;
 	// consts-end
-	int maxIterations; // =500
+	int maxIterations;
 
 	int visitedCount[];
 
-	Random rand;
+	private Random rand = new Random();
+	{
+		// FIXME: Wouldn't it be better just to allow the default constructor
+		// initialise the seed properly ?
+		rand.setSeed((long) (Math.random() * 1000));
+	}
 
 	private int df(int j) {
 		return visitedCount[j];
 	}
 
-	public BeesAlgorithm(Knapsack knapsack, Item[] items, int maxIterations) {
-		dimensions = knapsack.getDimension();
-		itemsAmount = items.length;
-		this.knapsack = knapsack;
-		this.items = items;
-		// this.maxIterations = maxIterations;//TODO
-		this.maxIterations = 20;
-		visitedCount = new int[itemsAmount];
-		rand = new Random();
-		rand.setSeed((long) (Math.random() * 1000));
+	public static class Builder {
+		// required
+		private Knapsack knapsack;
+		private Item[] items;
+		private int maxIterations = 500;
 
+		// optional
+		private int nBee = 30;
+		private int nSite = 5;
+		private int ngh = 2;
+		private int nep = 2;
+
+		public Builder(Knapsack knapsack, Item[] items) {
+			this.knapsack = knapsack;
+			this.items = items;
+		}
+
+		public Builder(Knapsack knapsack, List<Item> items) {
+			this(knapsack, (Item[]) items.toArray(new Item[items.size()]));
+		}
+
+		public Builder maxIterations(int value) {
+			maxIterations = value;
+			return this;
+		}
+
+		public Builder nBee(int value) {
+			nBee = value;
+			return this;
+		}
+
+		public Builder nSite(int value) {
+			nSite = value;
+			return this;
+		}
+
+		public Builder ngh(int value) {
+			ngh = value;
+			return this;
+		}
+
+		public Builder nep(int value) {
+			nep = value;
+			return this;
+		}
+
+		public BeesAlgorithm build() {
+			return new BeesAlgorithm(this);
+		}
+
+		public Knapsack getKnapsack() {
+			return knapsack;
+		}
+
+		public Item[] getItems() {
+			return items;
+		}
+
+		public int getMaxIterations() {
+			return maxIterations;
+		}
+
+		public int getNBee() {
+			return nBee;
+		}
+
+		public int getNSite() {
+			return nSite;
+		}
+
+		public int getNgh() {
+			return ngh;
+		}
+
+		public int getNep() {
+			return nep;
+		}
+	}
+
+	private BeesAlgorithm(Builder builder) {
+		this.knapsack = builder.knapsack;
+		this.items = builder.items;
+		dimensions = knapsack.getDimension();
+		itemsAmount = builder.items.length;
+		// this.maxIterations = builder.maxIterations;//TODO
+		this.maxIterations = builder.maxIterations;
+		this.nBee = builder.nBee;
+		this.nSite = builder.nSite;
+		this.ngh = builder.ngh;
+		this.nep = builder.nep;
+		visitedCount = new int[itemsAmount];
 	}
 
 	private double itemsWeightSum(boolean matrix[], int dimension) {
@@ -93,7 +185,8 @@ public class BeesAlgorithm {
 		for (int i = 0; i < dimensions; i++) {
 			duzaSuma += (items[j].getWeight(i) / (b(i) * b(i)));
 		}
-		double test = fj[j] * Math.pow(maxDF / df(j), gamma) * Math.pow(items[j].getValue() / maxC, alpha) / Math.pow(duzaSuma / maxSPrim, beta);
+		double test = fj[j] * Math.pow(maxDF / df(j), gamma) * Math.pow(items[j].getValue() / maxC, alpha)
+				/ Math.pow(duzaSuma / maxSPrim, beta);
 		// System.out.println(test);
 		// return test;
 		return 1;// TODO

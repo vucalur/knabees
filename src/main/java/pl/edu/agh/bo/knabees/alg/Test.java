@@ -4,18 +4,30 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
+import pl.edu.agh.bo.knabees.communication.FileParsingException;
+import pl.edu.agh.bo.knabees.objects.Item;
+import pl.edu.agh.bo.knabees.objects.Knapsack;
+import pl.edu.agh.bo.knabees.utils.Utils;
+
 public class Test {
+	private static final org.apache.log4j.Logger logger = Logger.getLogger(Test.class);
 	private Item[] items;
 	private Knapsack knapsack;
 
 	public Test(Scanner sc) {
 		System.out.println("START!");
-		if (!readInput(sc)) {
-			System.out.println("Wrong input!");
-			return;
+
+		try {
+			BeesAlgorithm.Builder b = Utils.readItemsAndKnapsackData(sc);
+			items = b.getItems();
+			knapsack = b.getKnapsack();
+		} catch (FileParsingException e) {
+			logger.info("Wrong input");
 		}
 
-		BeesAlgorithm bA = new BeesAlgorithm(knapsack, items, 500);
+		BeesAlgorithm bA = new BeesAlgorithm.Builder(knapsack, items).build();
 		bA.run();
 		boolean solution[] = bA.getSolution();
 
@@ -79,7 +91,5 @@ public class Test {
 		else {
 			new Test(new Scanner(System.in));
 		}
-
 	}
-
 }

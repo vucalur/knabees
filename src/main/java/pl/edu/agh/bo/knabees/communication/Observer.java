@@ -1,7 +1,9 @@
 package pl.edu.agh.bo.knabees.communication;
 
-import java.util.List;
-
+/**
+ * @param <T>
+ *            Type of Data being send to observer
+ */
 public interface Observer<T> {
-	void notifyMe(List<? extends T> changed);
+	void notifyMe(T data);
 }

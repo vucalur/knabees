@@ -17,7 +17,7 @@ doc/*
 # .project
 # .settings
 
-# Maven build directotries #
+# Maven build directories #
 ###################
 target/*
 
