@@ -31,6 +31,7 @@ public class Knapsack {
 	}
 
 	public static Knapsack parseKnapsack(String textForm) {
+		System.out.println("Knapsack debug: " + textForm);
 		try (Scanner s = new Scanner(textForm.trim())) {
 			s.useDelimiter("[^\\p{Digit}\\.]");
 			List<Double> limits = new ArrayList<>();

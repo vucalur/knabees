@@ -46,6 +46,7 @@ public class Item {
 	}
 
 	public static Item parseItem(String textForm) {
+		System.out.println("Item debug: " + textForm);
 		try (Scanner s = new Scanner(textForm.trim())) {
 			s.useDelimiter("[^\\p{Digit}\\.]");
 			while (!(s.hasNextDouble() || s.hasNextInt())) {
