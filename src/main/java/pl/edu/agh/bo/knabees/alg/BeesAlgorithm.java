@@ -388,7 +388,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		for (int i = 0; i < nBee; i++) {
 			solutions.add(randomizeSolution());
 		}
-
+		
 		for (int nIteration = 1; nIteration <= maxIterations; nIteration++) {
 			Collections.sort(solutions, new Comparator<boolean[]>() {
 				@Override
@@ -417,6 +417,8 @@ public class BeesAlgorithm extends Observable<IterationData> {
 			}
 			solutions = newSolutions;
 			System.out.println(nIteration);
+			//nie wiem, czy tak ma to być????
+			notifyAllObservers(new IterationData.Builder(nIteration, itemsValue(solution)).build());
 		}
 		//TODO: for tests only!!!
 		

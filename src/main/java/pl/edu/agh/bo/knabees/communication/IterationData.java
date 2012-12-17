@@ -15,7 +15,7 @@ public final class IterationData {
 
 		private double totalTakenValue;
 
-		public Builder(int iterationNumber, int totalTakenValue) {
+		public Builder(int iterationNumber, double totalTakenValue) {
 			this.iterationNum = iterationNumber;
 			this.totalTakenValue = totalTakenValue;
 		}
