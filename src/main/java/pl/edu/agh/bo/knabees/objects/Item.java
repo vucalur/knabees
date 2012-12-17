@@ -47,10 +47,9 @@ public class Item {
 	}
 
 	public static Item parseItem(String textForm) {
-		System.out.println("Item debug: " + textForm);
 		try (Scanner s = new Scanner(textForm.trim())) {
 			s.useDelimiter("[^\\p{Digit}\\.]");
-			s.useLocale(new Locale("en_US"));
+			s.useLocale(new Locale("en", "US"));
 			while (!(s.hasNextDouble() || s.hasNextInt())) {
 				s.next();
 			}

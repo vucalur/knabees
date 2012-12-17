@@ -32,10 +32,9 @@ public class Knapsack {
 	}
 
 	public static Knapsack parseKnapsack(String textForm) {
-		System.out.println("Knapsack debug: " + textForm);
 		try (Scanner s = new Scanner(textForm.trim())) {
 			s.useDelimiter("[^\\p{Digit}\\.]");
-			s.useLocale(new Locale("en_US"));
+			s.useLocale(new Locale("en", "US"));
 			List<Double> limits = new ArrayList<>();
 			while (true) {
 				if (s.hasNextInt()) {

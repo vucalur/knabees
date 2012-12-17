@@ -51,7 +51,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 	private Random rand = new Random();
 	{
 		// FIXME: Wouldn't it be better just to allow the default constructor
-		// initialise the seed properly ?
+		// initialize the seed properly ?
 		rand.setSeed((long) (Math.random() * 1000));
 	}
 
@@ -382,7 +382,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 	}
 
 	public void run() {
-		ArrayList<boolean[]> solutions = new ArrayList<>();
+		ArrayList<boolean[]> solutions = new ArrayList<boolean[]>();
 
 		// initial solution (random)
 		for (int i = 0; i < nBee; i++) {
@@ -418,6 +418,37 @@ public class BeesAlgorithm extends Observable<IterationData> {
 			solutions = newSolutions;
 			System.out.println(nIteration);
 		}
+		//TODO: for tests only!!!
+		
+		
+		System.out.println("Limits:");
+		for(int i=0;i<dimensions;++i) {
+			System.out.print(knapsack.getLimit(i)+"\t");
+		}
+		System.out.println();
+		
+		System.out.println("\nThe Choosen Ones:");
+		for(int i= 0; i<itemsAmount; i++)
+			System.out.print(solution[i]?"1":"0");
+		System.out.println();
+		
+		double[] weights = new double[dimensions];
+		double big_price = 0;
+		for(int i=0;i<items.length;++i) {
+			if(!solution[i]) continue;
+			for(int j=0; j<dimensions; ++j) {
+				System.out.print(items[i].getWeight(j)+"\t");
+				weights[j]+=items[i].getWeight(j);
+			}
+			System.out.println("\t("+items[i].getValue()+")");
+			big_price += items[i].getValue();
+		}
+		System.out.println("Overall:");
+		for(int j=0;j<dimensions;++j) {
+			System.out.print(weights[j]+"\t");
+		}
+		System.out.println("\t("+big_price+")");
+		//TODO: end of tests
 	}
 
 	public boolean[] getSolution() {
