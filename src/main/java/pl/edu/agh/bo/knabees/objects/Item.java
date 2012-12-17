@@ -2,6 +2,7 @@ package pl.edu.agh.bo.knabees.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -49,6 +50,7 @@ public class Item {
 		System.out.println("Item debug: " + textForm);
 		try (Scanner s = new Scanner(textForm.trim())) {
 			s.useDelimiter("[^\\p{Digit}\\.]");
+			s.useLocale(new Locale("en_US"));
 			while (!(s.hasNextDouble() || s.hasNextInt())) {
 				s.next();
 			}
