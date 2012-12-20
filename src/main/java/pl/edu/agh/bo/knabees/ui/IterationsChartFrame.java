@@ -37,7 +37,7 @@ public class IterationsChartFrame extends JFrame implements Observer<IterationDa
 		this.setResizable(false);
 		this.setPreferredSize(new java.awt.Dimension(700, 500));
 
-		this.totalValue = new TimeSeries("Total value taken", Millisecond.class);
+		this.totalValue = new TimeSeries("Total value taken");
 		this.totalValue.setMaximumItemAge(MAXIMUM_AGE);
 
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
@@ -53,7 +53,7 @@ public class IterationsChartFrame extends JFrame implements Observer<IterationDa
 		renderer.setBaseStroke(new BasicStroke(2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
 		XYPlot xyplot = new XYPlot(dataset, domain, range, renderer);
 		// xyplot.setBackgroundPaint(Color.black);
-
+		
 		range.setAutoRange(true);
 		domain.setAutoRange(true);
 		domain.setLowerMargin(0.0);
@@ -70,6 +70,8 @@ public class IterationsChartFrame extends JFrame implements Observer<IterationDa
 		add(chartPanel);
 
 		pack(); // must occur after adding all components
+		totalValue.addOrUpdate(new Millisecond(), 0);
+		chart.fireChartChanged();
 	}
 
 	@Override

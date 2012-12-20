@@ -16,7 +16,8 @@ import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
 
 @SuppressWarnings("serial")
 public class AlgorithmParamsPanel extends JPanel implements Clearable {
-	private static final org.apache.log4j.Logger logger = Logger.getLogger(ItemsAndKnapsacksPanel.class);
+	private static final org.apache.log4j.Logger logger = Logger
+			.getLogger(ItemsAndKnapsacksPanel.class);
 	private JSpinner nBeeSpinner;
 	private JSpinner nSiteSpinner;
 	private JSpinner nghSpinner;
@@ -35,8 +36,10 @@ public class AlgorithmParamsPanel extends JPanel implements Clearable {
 		add(createSpinner("nSiteSpinner", nSiteSpinner = new JSpinner()));
 		add(createSpinner("nghSpinner", nghSpinner = new JSpinner()));
 		add(createSpinner("nepSpinner", nepSpinner = new JSpinner()));
-		add(createSpinner("maxIterationsSpinner", maxIterationsSpinner = new JSpinner()));
-		add(createCheckBox("falg (unused so far)", flagCheckBox = new JCheckBox()));
+		add(createSpinner("maxIterationsSpinner",
+				maxIterationsSpinner = new JSpinner()));
+		add(createCheckBox("falg (unused so far)",
+				flagCheckBox = new JCheckBox()));
 
 		loadDefaultValues();
 	}
@@ -90,7 +93,7 @@ public class AlgorithmParamsPanel extends JPanel implements Clearable {
 		nSiteSpinner.setValue(5);
 		nghSpinner.setValue(2);
 		nepSpinner.setValue(2);
-		maxIterationsSpinner.setValue(500);
+		maxIterationsSpinner.setValue(50);
 		flagCheckBox.setSelected(true);
 	}
 }
