@@ -59,7 +59,7 @@ public class KnabeesGUI extends JFrame {
 
 	@SuppressWarnings("serial")
 	private class CalculateAction extends AbstractAction {
-		public CalculateAction() {
+		CalculateAction() {
 			putValue(NAME, "Calculate");
 			putValue(SHORT_DESCRIPTION, "Confirms items & knapsacks choice and runs the main algorithm");
 		}

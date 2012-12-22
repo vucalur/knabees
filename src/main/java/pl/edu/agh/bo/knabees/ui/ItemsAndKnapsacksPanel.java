@@ -1,5 +1,6 @@
 package pl.edu.agh.bo.knabees.ui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -7,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -30,7 +32,7 @@ import pl.edu.agh.bo.knabees.objects.Knapsack;
 import pl.edu.agh.bo.knabees.utils.Utils;
 
 @SuppressWarnings("serial")
-public class ItemsAndKnapsacksPanel extends JPanel implements Clearable {
+public class ItemsAndKnapsacksPanel extends JPanel implements DataHolder {
 	private static final org.apache.log4j.Logger logger = Logger.getLogger(ItemsAndKnapsacksPanel.class);
 
 	private JTextField fileStatusField;
@@ -47,6 +49,7 @@ public class ItemsAndKnapsacksPanel extends JPanel implements Clearable {
 	private void initilize(Action calculateAction) {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(initOpenFilePanel());
+		add(initGenerateRandomPanel());
 		add(initLoadedDataPanel(calculateAction));
 	}
 
@@ -76,10 +79,7 @@ public class ItemsAndKnapsacksPanel extends JPanel implements Clearable {
 							fileStatusField.setText(e.getMessage());
 							return;
 						}
-						knapsackTextField.setText(dataRead.getKnapsack().toString());
-						for (Item item : dataRead.getItems()) {
-							itemsListModel.addElement(item.toString());
-						}
+						loadData(dataRead);
 					} else {
 						logger.log(Priority.INFO, "Open command cancelled by user.");
 					}
@@ -91,6 +91,26 @@ public class ItemsAndKnapsacksPanel extends JPanel implements Clearable {
 		openFilePanel.add(fileStatusField);
 
 		return openFilePanel;
+	}
+
+	private Component initGenerateRandomPanel() {
+		JPanel generateRandomPanel = new JPanel();
+		generateRandomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		JButton showGenerateWindowButton = new JButton();
+		showGenerateWindowButton.setAction(new AbstractAction() {
+			{
+				putValue(NAME, "Generate random data");
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new GenerateRandomDataFrame(ItemsAndKnapsacksPanel.this).setVisible(true);
+			}
+		});
+		generateRandomPanel.add(showGenerateWindowButton);
+
+		return generateRandomPanel;
 	}
 
 	private JPanel initLoadedDataPanel(Action calculateAction) {
@@ -136,6 +156,14 @@ public class ItemsAndKnapsacksPanel extends JPanel implements Clearable {
 		loadedDataPanel.add(bottomButtonsPanel);
 
 		return loadedDataPanel;
+	}
+
+	@Override
+	public void loadData(BeesAlgorithm.Builder data) {
+		knapsackTextField.setText(data.getKnapsack().toString());
+		for (Item item : data.getItems()) {
+			itemsListModel.addElement(item.toString());
+		}
 	}
 
 	@Override

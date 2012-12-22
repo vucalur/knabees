@@ -2,6 +2,7 @@ package pl.edu.agh.bo.knabees.ui;
 
 import java.awt.GridLayout;
 
+import javax.naming.OperationNotSupportedException;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,10 +11,11 @@ import javax.swing.JSpinner;
 import org.apache.log4j.Logger;
 
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
+import pl.edu.agh.bo.knabees.alg.BeesAlgorithm.Builder;
 import pl.edu.agh.bo.knabees.objects.Item;
 
 @SuppressWarnings("serial")
-public class AlgorithmParamsPanel extends JPanel implements Clearable {
+public class AlgorithmParamsPanel extends JPanel implements DataHolder {
 	private static final org.apache.log4j.Logger logger = Logger.getLogger(ItemsAndKnapsacksPanel.class);
 
 	private JPanel mainPanel;
@@ -80,5 +82,10 @@ public class AlgorithmParamsPanel extends JPanel implements Clearable {
 		maxIterationsSpinner.setValue(defaultsSource.getMaxIterations());
 		flagCheckBox.setSelected(true); // FIXME : provide proper default for
 										// the flag
+	}
+
+	@Override
+	public void loadData(Builder data) throws OperationNotSupportedException {
+		throw new OperationNotSupportedException();
 	}
 }

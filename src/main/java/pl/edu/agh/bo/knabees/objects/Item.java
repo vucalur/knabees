@@ -25,10 +25,10 @@ public class Item {
 		}
 	}
 
-	public Item(double value, List<Double> wieghts) {
+	public Item(double value, List<Double> weights) {
 		this.value = value;
-		this.weights = new double[wieghts.size()];
-		Double[] weightsTmp = (Double[]) wieghts.toArray(new Double[wieghts.size()]);
+		this.weights = new double[weights.size()];
+		Double[] weightsTmp = (Double[]) weights.toArray(new Double[weights.size()]);
 		for (int i = 0; i < weightsTmp.length; i++) {
 			this.weights[i] = weightsTmp[i];
 		}
