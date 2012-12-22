@@ -14,6 +14,7 @@ import javax.swing.UIManager;
 import org.apache.log4j.Logger;
 
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
+import pl.edu.agh.bo.knabees.ui.observers.IterationsChartFrame;
 
 @SuppressWarnings("serial")
 public class KnabeesGUI extends JFrame {
@@ -23,10 +24,14 @@ public class KnabeesGUI extends JFrame {
 	private final Action calculateAction = this.new CalculateAction();
 
 	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-		} catch (Throwable e) {
-			e.printStackTrace();
+		for (String tryLookAndFeel : new String[] { "com.sun.java.swing.plaf.gtk.GTKLookAndFeel",
+				"javax.swing.plaf.nimbus.NimbusLookAndFeel" }) {
+			try {
+				UIManager.setLookAndFeel(tryLookAndFeel);
+				break;
+			} catch (Throwable e) {
+				continue;
+			}
 		}
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -69,7 +74,8 @@ public class KnabeesGUI extends JFrame {
 			this.setEnabled(false);
 			// algorithmParamsPanel.setEnabled(false);
 			// itemsAndKnapsacksPanel.setEnabled(false);
-			final BeesAlgorithm.Builder builder = new BeesAlgorithm.Builder(itemsAndKnapsacksPanel.getKnapsack(), itemsAndKnapsacksPanel.getItems());
+			final BeesAlgorithm.Builder builder = new BeesAlgorithm.Builder(itemsAndKnapsacksPanel.getKnapsack(),
+					itemsAndKnapsacksPanel.getItems());
 			algorithmParamsPanel.loadDataTo(builder);
 
 			itemsAndKnapsacksPanel.clearData();

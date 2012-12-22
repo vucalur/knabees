@@ -168,6 +168,7 @@ public class ItemsAndKnapsacksPanel extends JPanel implements DataHolder {
 
 	@Override
 	public void clearData() {
+		fileStatusField.setText("");
 		knapsackTextField.setText("");
 		itemsListModel.clear();
 	}
