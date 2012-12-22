@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
@@ -16,12 +15,12 @@ import org.apache.log4j.Logger;
 
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
 
+@SuppressWarnings("serial")
 public class KnabeesGUI extends JFrame {
 	private static final org.apache.log4j.Logger logger = Logger.getLogger(KnabeesGUI.class);
 	private AlgorithmParamsPanel algorithmParamsPanel;
 	private ItemsAndKnapsacksPanel itemsAndKnapsacksPanel;
-	private JPanel calculatePanel;
-	private final Action calculateAction = new CalculateAction();
+	private final Action calculateAction = this.new CalculateAction();
 
 	public static void main(String[] args) {
 		try {
@@ -49,50 +48,16 @@ public class KnabeesGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JTabbedPane tabs = new JTabbedPane(JTabbedPane.TOP);
-		add(tabs); // or : getContentPane().add(tabs); ?
+		getContentPane().add(tabs);
 
 		algorithmParamsPanel = new AlgorithmParamsPanel();
 		tabs.addTab("Set algorithm parameters", null, algorithmParamsPanel, null);
 
-		itemsAndKnapsacksPanel = new ItemsAndKnapsacksPanel(new CalculateAction());
+		itemsAndKnapsacksPanel = new ItemsAndKnapsacksPanel(calculateAction);
 		tabs.addTab("Run algorithm ", null, itemsAndKnapsacksPanel, null);
-
-		// calculatePanel = createCalculatePanel();
-		// tabs.addTab("Calculate !", null, calculatePanel, null);
-
 	}
 
-	// private JPanel createCalculatePanel() {
-	// JPanel calculatePanel = new JPanel();
-	// calculatePanel.setLayout(new BoxLayout(calculatePanel,
-	// BoxLayout.Y_AXIS));
-	//
-	// JButton calculateButton = new JButton("Calculate");
-	// calculateButton.setAction(calculateAction);
-	// calculatePanel.add(Box.createRigidArea(new Dimension(5, 5)));
-	// calculatePanel.add(calculateButton);
-	//
-	// JPanel progressPanel = new JPanel();
-	// progressPanel.setLayout(new BoxLayout(progressPanel, BoxLayout.Y_AXIS));
-	// JLabel progressLabel = new
-	// JLabel("<html><b>Live progress info:</b></html>");
-	// progressPanel.add(progressLabel);
-	//
-	// JButton itemsStatusButton = new
-	// JButton("Show items status (free/taken)");
-	// progressPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-	// progressPanel.add(itemsStatusButton);
-	//
-	// JButton timelineButton = new JButton("Show progress chart");
-	// progressPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-	// progressPanel.add(timelineButton);
-	//
-	// calculatePanel.add(Box.createRigidArea(new Dimension(10, 20)));
-	// calculatePanel.add(progressPanel);
-	//
-	// return calculatePanel;
-	// }
-
+	@SuppressWarnings("serial")
 	private class CalculateAction extends AbstractAction {
 		public CalculateAction() {
 			putValue(NAME, "Calculate");
@@ -104,8 +69,7 @@ public class KnabeesGUI extends JFrame {
 			this.setEnabled(false);
 			// algorithmParamsPanel.setEnabled(false);
 			// itemsAndKnapsacksPanel.setEnabled(false);
-			final BeesAlgorithm.Builder builder = new BeesAlgorithm.Builder(itemsAndKnapsacksPanel.getKnapsack(),
-					itemsAndKnapsacksPanel.getItems());
+			final BeesAlgorithm.Builder builder = new BeesAlgorithm.Builder(itemsAndKnapsacksPanel.getKnapsack(), itemsAndKnapsacksPanel.getItems());
 			algorithmParamsPanel.loadDataTo(builder);
 
 			itemsAndKnapsacksPanel.clearData();

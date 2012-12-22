@@ -20,8 +20,8 @@ import org.jfree.data.time.TimeSeriesCollection;
 import pl.edu.agh.bo.knabees.communication.IterationData;
 import pl.edu.agh.bo.knabees.communication.Observer;
 
-public class IterationsChartFrame extends JFrame implements
-		Observer<IterationData> {
+@SuppressWarnings("serial")
+public class IterationsChartFrame extends JFrame implements Observer<IterationData> {
 	IterationsChartFrame() {
 		super("Solutions found in particular iteration");
 		initilize();
@@ -53,8 +53,7 @@ public class IterationsChartFrame extends JFrame implements
 
 		XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
 		renderer.setSeriesPaint(1, Color.blue);
-		renderer.setBaseStroke(new BasicStroke(2f, BasicStroke.CAP_BUTT,
-				BasicStroke.JOIN_BEVEL));
+		renderer.setBaseStroke(new BasicStroke(2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
 		XYPlot xyplot = new XYPlot(dataset, domain, range, renderer);
 		// xyplot.setBackgroundPaint(Color.black);
 
@@ -67,8 +66,7 @@ public class IterationsChartFrame extends JFrame implements
 
 		range.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-		chart = new JFreeChart("Total value taken",
-				JFreeChart.DEFAULT_TITLE_FONT, xyplot, true);
+		chart = new JFreeChart("Total value taken", JFreeChart.DEFAULT_TITLE_FONT, xyplot, true);
 		chart.setNotify(false); // reduce performance overheads
 								// (http://stackoverflow.com/a/3204086/1432478)
 		chartPanel = new ChartPanel(chart);
@@ -79,8 +77,7 @@ public class IterationsChartFrame extends JFrame implements
 
 	@Override
 	public void notifyMe(IterationData data) {
-		totalValue.addOrUpdate(new Millisecond(),
-				data.calculateTotalTakenValue());
+		totalValue.addOrUpdate(new Millisecond(), data.calculateTotalTakenValue());
 		chart.setNotify(true); // quick fix :)
 		chart.setNotify(false);
 	}

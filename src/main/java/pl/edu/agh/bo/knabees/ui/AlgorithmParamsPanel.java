@@ -1,10 +1,7 @@
 package pl.edu.agh.bo.knabees.ui;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,11 +10,13 @@ import javax.swing.JSpinner;
 import org.apache.log4j.Logger;
 
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
+import pl.edu.agh.bo.knabees.objects.Item;
 
 @SuppressWarnings("serial")
 public class AlgorithmParamsPanel extends JPanel implements Clearable {
-	private static final org.apache.log4j.Logger logger = Logger
-			.getLogger(ItemsAndKnapsacksPanel.class);
+	private static final org.apache.log4j.Logger logger = Logger.getLogger(ItemsAndKnapsacksPanel.class);
+
+	private JPanel mainPanel;
 	private JSpinner nBeeSpinner;
 	private JSpinner nSiteSpinner;
 	private JSpinner nghSpinner;
@@ -27,51 +26,35 @@ public class AlgorithmParamsPanel extends JPanel implements Clearable {
 
 	AlgorithmParamsPanel() {
 		initilize();
-	}
-
-	private void initilize() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-		add(createSpinner("nBee", nBeeSpinner = new JSpinner()));
-		add(createSpinner("nSiteSpinner", nSiteSpinner = new JSpinner()));
-		add(createSpinner("nghSpinner", nghSpinner = new JSpinner()));
-		add(createSpinner("nepSpinner", nepSpinner = new JSpinner()));
-		add(createSpinner("maxIterationsSpinner",
-				maxIterationsSpinner = new JSpinner()));
-		add(createCheckBox("falg (unused so far)",
-				flagCheckBox = new JCheckBox()));
-
 		loadDefaultValues();
 	}
 
-	private JPanel createSpinner(String labelTitle, JSpinner spinner) {
-		add(Box.createRigidArea(new Dimension(20, 20)));
+	private void initilize() {
+		mainPanel = new JPanel();
+		// TODO : align left - none of these 2 are working :
+		// mainPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		// mainPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		mainPanel.setLayout(new GridLayout(0, 2, 50, 60));
 
-		JLabel label = new JLabel(labelTitle);
-		// spinner.setMinimumSize(new Dimension(20, 0)); // FIXME - spinners
-		// width is too small
+		addSpinnerTo(mainPanel, "nBee", nBeeSpinner = new JSpinner());
+		addSpinnerTo(mainPanel, "nSite", nSiteSpinner = new JSpinner());
+		addSpinnerTo(mainPanel, "ngh", nghSpinner = new JSpinner());
+		addSpinnerTo(mainPanel, "nep", nepSpinner = new JSpinner());
+		addSpinnerTo(mainPanel, "maxIterations", maxIterationsSpinner = new JSpinner());
+		// FIXME : ↓ fix label in the release version
+		addCheckBoxTo(mainPanel, "falg (unused so far)", flagCheckBox = new JCheckBox());
 
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		panel.add(label);
-		panel.add(Box.createRigidArea(new Dimension(20, 0)));
-		panel.add(spinner);
-
-		return panel;
+		add(mainPanel);
 	}
 
-	private JPanel createCheckBox(String labelTitle, JCheckBox checkBox) {
-		add(Box.createRigidArea(new Dimension(20, 20)));
+	private void addSpinnerTo(JPanel target, String labelTitle, JSpinner spinner) {
+		target.add(new JLabel(labelTitle));
+		target.add(spinner);
+	}
 
-		JLabel label = new JLabel(labelTitle);
-
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		panel.add(label);
-		panel.add(Box.createRigidArea(new Dimension(20, 0)));
-		panel.add(checkBox);
-
-		return panel;
+	private void addCheckBoxTo(JPanel target, String labelTitle, JCheckBox checkBox) {
+		target.add(new JLabel(labelTitle));
+		target.add(checkBox);
 	}
 
 	public void loadDataTo(BeesAlgorithm.Builder builder) {
@@ -89,11 +72,13 @@ public class AlgorithmParamsPanel extends JPanel implements Clearable {
 	}
 
 	private void loadDefaultValues() {
-		nBeeSpinner.setValue(30);
-		nSiteSpinner.setValue(5);
-		nghSpinner.setValue(2);
-		nepSpinner.setValue(2);
-		maxIterationsSpinner.setValue(50);
-		flagCheckBox.setSelected(true);
+		BeesAlgorithm.Builder defaultsSource = new BeesAlgorithm.Builder(null, new Item[0]);
+		nBeeSpinner.setValue(defaultsSource.getNBee());
+		nSiteSpinner.setValue(defaultsSource.getNSite());
+		nghSpinner.setValue(defaultsSource.getNgh());
+		nepSpinner.setValue(defaultsSource.getNep());
+		maxIterationsSpinner.setValue(defaultsSource.getMaxIterations());
+		flagCheckBox.setSelected(true); // FIXME : provide proper default for
+										// the flag
 	}
 }
