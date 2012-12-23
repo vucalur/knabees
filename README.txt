@@ -11,10 +11,10 @@
 	  Ustawienia porobiłem na ile się dało project-specific, także nie powinno tu być rozbieżności
 	 
 	* Warto się upewnić że macie ustawione auto-save actions
-      oraz formatter wbudowany, tyle że długość lini 150
+      oraz formatter wbudowany, tyle że długość lini 140
 	  no i przede wszystkim Javę 1.7 (jeśli tylko jest zainstalowana to pom.xml powinien ją ustawić dla tego projektu)
 
-	* po zainstalowaniu - na Debianopochodnych pakiet: maven (nie maven2 - robimy na trójce, bo już działa przez wtyczkę do eclipse'a)
+	* po zainstalowaniu - na Debianopochodnych (Ubuntu) pakiet: maven (nie maven2 - robimy na trójce, bo już działa przez wtyczkę do eclipse'a)
 	  konieczne jest utworzenie pliku /home/user/.m2/settings.xml
 	  i dodanie mirrora dla Europy, żeby jakoś w miarę szybko się ściągało.
 	  Cała zawartość pliku:
@@ -28,12 +28,22 @@
 			</mirrors>
 		</settings>
 
-
+####	ODPALANIE			####
+	Wersja dev:
+		* w konsoli, w głównym katalogu projektu:
+		  $ mvn install
+		  $ mvn exec:java -Dexec.mainClass="pl.edu.agh.bo.knabees.ui.KnabeesGUI"
+		  
+		* eclipse:
+		aplikację odpalamy jako standardową Java Application, entry point: KnabeesGUI
+		
+	Wersja release:
+		TODO
 
 
 ####	TROUBLESHOOTING		####
 
 	* jak się świecą błędy w pom.xml, to: projekt->prawoklik->Maven->Update project
 	  Spróbuję doczytać co jest nie tak że się pali zawsze przy restarcie Eclipse'a
+	  update: teraz już mi się nie pali
 	
-	* aplikację odpalamy jako standardową Java Application, entry point: KnabeesGUI
