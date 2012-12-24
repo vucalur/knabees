@@ -404,9 +404,12 @@ public class BeesAlgorithm extends Observable<IterationData> {
 					return c > 0 ? -1 : (c < 0 ? 1 : 0);
 				}
 			});
+			double[] solutionsValues = new double[solutions.size()];
 			System.out.print("Posortowane:");
-			for (int f = 0; f < solutions.size(); ++f)
-				System.out.print(" " + itemsValue(solutions.get(f)));
+			for (int i = 0; i < solutions.size(); ++i) {
+				solutionsValues[i] = itemsValue(solutions.get(i));
+				System.out.print(" " + solutionsValues[i]);
+			}
 			System.out.println();
 			ArrayList<boolean[]> newSolutions = new ArrayList<boolean[]>();
 			if (solution == null
@@ -428,7 +431,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 			System.out.println(nIteration);
 			// nie wiem, czy tak ma to być????
 			notifyAllObservers(new IterationData.Builder(nIteration,
-					itemsValue(solution), solution).build());
+					itemsValue(solution), solution, solutionsValues).build());
 		}
 		// TODO: for tests only!!!
 
