@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
 
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
 import pl.edu.agh.bo.knabees.communication.FileParsingException;
-import pl.edu.agh.bo.knabees.objects.Item;
-import pl.edu.agh.bo.knabees.objects.Knapsack;
+import pl.edu.agh.bo.knabees.model.Item;
+import pl.edu.agh.bo.knabees.model.Knapsack;
 
 public class Utils {
 	private static final org.apache.log4j.Logger logger = Logger.getLogger(Utils.class);

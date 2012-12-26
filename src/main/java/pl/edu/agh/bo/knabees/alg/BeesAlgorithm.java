@@ -9,8 +9,8 @@ import java.util.Random;
 
 import pl.edu.agh.bo.knabees.communication.IterationData;
 import pl.edu.agh.bo.knabees.communication.Observable;
-import pl.edu.agh.bo.knabees.objects.Item;
-import pl.edu.agh.bo.knabees.objects.Knapsack;
+import pl.edu.agh.bo.knabees.model.Item;
+import pl.edu.agh.bo.knabees.model.Knapsack;
 
 public class BeesAlgorithm extends Observable<IterationData> {
 	private Knapsack knapsack;
@@ -77,7 +77,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		}
 
 		public Builder(Knapsack knapsack, List<Item> items) {
-			this(knapsack, (Item[]) items.toArray(new Item[items.size()]));
+			this(knapsack, items.toArray(new Item[items.size()]));
 		}
 
 		public Builder maxIterations(int value) {
@@ -176,8 +176,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		return true;
 	}
 
-	private double evaluateProbability(int j, double[] fj, double alpha,
-			double beta, double gamma) {
+	private double evaluateProbability(int j, double[] fj, double alpha, double beta, double gamma) {
 		double maxC = maxC();
 		double maxSPrim = maxSPrim();
 		double maxDF = maxDF();
@@ -186,8 +185,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		for (int i = 0; i < dimensions; i++) {
 			duzaSuma += (items[j].getWeight(i) / (b(i) * b(i)));
 		}
-		double test = fj[j] * Math.pow(maxDF / df(j), gamma)
-				* Math.pow(items[j].getValue() / maxC, alpha)
+		double test = fj[j] * Math.pow(maxDF / df(j), gamma) * Math.pow(items[j].getValue() / maxC, alpha)
 				/ Math.pow(duzaSuma / maxSPrim, beta);
 		// System.out.println(test);
 		// return test;
@@ -248,13 +246,11 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		return solution;
 	}
 
-	public int rws(double[] fj, boolean items[], double alpha, double beta,
-			double gamma) {
+	public int rws(double[] fj, boolean items[], double alpha, double beta, double gamma) {
 		double probabilitySum = 0, p = 0;
 		double randomNumber;
 		for (int i = 0; i < itemsAmount; i++)
-			probabilitySum += items[i] ? evaluateProbability(i, fj, alpha,
-					beta, gamma) : 0;
+			probabilitySum += items[i] ? evaluateProbability(i, fj, alpha, beta, gamma) : 0;
 		randomNumber = Math.random() * probabilitySum;
 		// System.out.println(probabilitySum);
 		for (int i = 0; i < itemsAmount; i++) {
@@ -266,17 +262,14 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		return -1;
 	}
 
-	public int rws2(double[] fj, boolean items[], double alpha, double beta,
-			double gamma) {
+	public int rws2(double[] fj, boolean items[], double alpha, double beta, double gamma) {
 		double probabilitySum = 0, p = 0;
 		double randomNumber;
 		for (int i = 0; i < itemsAmount; i++)
-			probabilitySum += items[i] ? 1.0 / evaluateProbability(i, fj,
-					alpha, beta, gamma) : 0;
+			probabilitySum += items[i] ? 1.0 / evaluateProbability(i, fj, alpha, beta, gamma) : 0;
 		randomNumber = Math.random() * probabilitySum;
 		for (int i = 0; i < itemsAmount; i++) {
-			p += items[i] ? 1.0 / evaluateProbability(i, fj, alpha, beta, gamma)
-					: 0;
+			p += items[i] ? 1.0 / evaluateProbability(i, fj, alpha, beta, gamma) : 0;
 			if (p >= randomNumber)
 				return i;
 		}
@@ -412,15 +405,13 @@ public class BeesAlgorithm extends Observable<IterationData> {
 			}
 			System.out.println();
 			ArrayList<boolean[]> newSolutions = new ArrayList<boolean[]>();
-			if (solution == null
-					|| itemsValue(solutions.get(0)) > itemsValue(solution))
+			if (solution == null || itemsValue(solutions.get(0)) > itemsValue(solution))
 				solution = solutions.get(0);
 
 			for (int i = 0; i < nSite; ++i) {
 				newSolutions.add(solutions.get(i));
 				for (int j = 0; j < nep; ++j) {
-					newSolutions.add(solutionFromNeighbourhood(
-							solutions.get(i), ngh));
+					newSolutions.add(solutionFromNeighbourhood(solutions.get(i), ngh));
 				}
 			}// maybe we should delete identical solutions from solution list,
 				// shouldn't we?
@@ -429,9 +420,8 @@ public class BeesAlgorithm extends Observable<IterationData> {
 			}
 			solutions = newSolutions;
 			System.out.println(nIteration);
-			// nie wiem, czy tak ma to być????
-			notifyAllObservers(new IterationData.Builder(nIteration,
-					itemsValue(solution), solution, solutionsValues).build());
+			notifyAllObservers(new IterationData.Builder(nIteration, itemsValue(solution)).itemsTaken(solution)
+					.solutionsValues(solutionsValues).build());
 		}
 		// TODO: for tests only!!!
 

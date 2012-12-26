@@ -12,10 +12,11 @@ import org.apache.log4j.Logger;
 
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm.Builder;
-import pl.edu.agh.bo.knabees.objects.Item;
+import pl.edu.agh.bo.knabees.model.Item;
 
 @SuppressWarnings("serial")
 public class AlgorithmParamsPanel extends JPanel implements DataHolder {
+	@SuppressWarnings("unused")
 	private static final org.apache.log4j.Logger logger = Logger.getLogger(ItemsAndKnapsacksPanel.class);
 
 	private JPanel mainPanel;

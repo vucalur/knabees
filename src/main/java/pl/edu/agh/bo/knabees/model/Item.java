@@ -1,4 +1,4 @@
-package pl.edu.agh.bo.knabees.objects;
+package pl.edu.agh.bo.knabees.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 public class Item {
+	@SuppressWarnings("unused")
 	private static final org.apache.log4j.Logger logger = Logger.getLogger(Item.class);
 
 	private double value;
@@ -28,7 +29,7 @@ public class Item {
 	public Item(double value, List<Double> weights) {
 		this.value = value;
 		this.weights = new double[weights.size()];
-		Double[] weightsTmp = (Double[]) weights.toArray(new Double[weights.size()]);
+		Double[] weightsTmp = weights.toArray(new Double[weights.size()]);
 		for (int i = 0; i < weightsTmp.length; i++) {
 			this.weights[i] = weightsTmp[i];
 		}

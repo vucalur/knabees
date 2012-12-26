@@ -1,4 +1,4 @@
-package pl.edu.agh.bo.knabees.objects;
+package pl.edu.agh.bo.knabees.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 public class Knapsack {
+	@SuppressWarnings("unused")
 	private static final org.apache.log4j.Logger logger = Logger.getLogger(Knapsack.class);
 	private double limits[];
 
@@ -17,7 +18,7 @@ public class Knapsack {
 
 	public Knapsack(List<Double> limits) {
 		this.limits = new double[limits.size()];
-		Double[] limitsTmp = (Double[]) limits.toArray(new Double[limits.size()]);
+		Double[] limitsTmp = limits.toArray(new Double[limits.size()]);
 		for (int i = 0; i < limitsTmp.length; i++) {
 			this.limits[i] = limitsTmp[i];
 		}

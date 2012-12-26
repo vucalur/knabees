@@ -14,10 +14,12 @@ import javax.swing.UIManager;
 import org.apache.log4j.Logger;
 
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
+import pl.edu.agh.bo.knabees.ui.components.IconisedJFrame;
 import pl.edu.agh.bo.knabees.ui.observers.IterationsChartFrame;
+import pl.edu.agh.bo.knabees.ui.observers.IterationsChoicesFrame;
 
 @SuppressWarnings("serial")
-public class KnabeesGUI extends JFrame {
+public class KnabeesGUI extends IconisedJFrame {
 	private static final org.apache.log4j.Logger logger = Logger.getLogger(KnabeesGUI.class);
 	private AlgorithmParamsPanel algorithmParamsPanel;
 	private ItemsAndKnapsacksPanel itemsAndKnapsacksPanel;
@@ -62,7 +64,6 @@ public class KnabeesGUI extends JFrame {
 		tabs.addTab("Run algorithm ", null, itemsAndKnapsacksPanel, null);
 	}
 
-	@SuppressWarnings("serial")
 	private class CalculateAction extends AbstractAction {
 		CalculateAction() {
 			putValue(NAME, "Calculate");
@@ -87,8 +88,11 @@ public class KnabeesGUI extends JFrame {
 					logger.info("Calculation started");
 					BeesAlgorithm ba = builder.build();
 					IterationsChartFrame iterationsChartFrame = new IterationsChartFrame();
+					IterationsChoicesFrame iterationsChoicesFrame = new IterationsChoicesFrame(builder.getItems());
 					ba.addItemsObserver(iterationsChartFrame);
+					ba.addItemsObserver(iterationsChoicesFrame);
 					iterationsChartFrame.setVisible(true);
+					iterationsChoicesFrame.setVisible(true);
 					ba.run();
 					return null;
 				}
