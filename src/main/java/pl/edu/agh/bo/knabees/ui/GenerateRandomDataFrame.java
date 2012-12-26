@@ -20,11 +20,12 @@ import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
 
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
-import pl.edu.agh.bo.knabees.objects.Item;
-import pl.edu.agh.bo.knabees.objects.Knapsack;
+import pl.edu.agh.bo.knabees.model.Item;
+import pl.edu.agh.bo.knabees.model.Knapsack;
+import pl.edu.agh.bo.knabees.ui.components.IconisedJFrame;
 
 @SuppressWarnings("serial")
-public class GenerateRandomDataFrame extends JFrame {
+public class GenerateRandomDataFrame extends IconisedJFrame {
 	private static final org.apache.log4j.Logger logger = Logger.getLogger(GenerateRandomDataFrame.class);
 
 	private JPanel mainPanel;

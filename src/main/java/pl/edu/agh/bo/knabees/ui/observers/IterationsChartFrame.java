@@ -1,6 +1,10 @@
 package pl.edu.agh.bo.knabees.ui.observers;
 
+import java.awt.BasicStroke;
 import java.awt.Dimension;
+import java.awt.Stroke;
+
+import javax.swing.JFrame;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -9,20 +13,21 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame;
 
 import pl.edu.agh.bo.knabees.communication.IterationData;
 import pl.edu.agh.bo.knabees.communication.Observer;
+import pl.edu.agh.bo.knabees.ui.components.IconisedJFrame;
 
 @SuppressWarnings("serial")
-public class IterationsChartFrame extends ApplicationFrame implements Observer<IterationData> {
+public class IterationsChartFrame extends IconisedJFrame implements Observer<IterationData> {
 	private JFreeChart chart;
 	private XYSeries totalValueSeries;
 	private XYSeries beesSeries;
 
 	public IterationsChartFrame() {
 		super("Solutions chart");
-		this.setLocation(120, 70);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocation(120, 150);
 		setPreferredSize(new Dimension(700, 500));
 
 		this.setPreferredSize(new java.awt.Dimension(700, 500));
@@ -40,6 +45,8 @@ public class IterationsChartFrame extends ApplicationFrame implements Observer<I
 		renderer.setSeriesShapesVisible(0, false);
 		renderer.setSeriesLinesVisible(1, false);
 		renderer.setSeriesShapesVisible(1, true);
+		Stroke boldLine = new BasicStroke(1.5f);
+		renderer.setSeriesStroke(0, boldLine);
 
 		XYPlot plot = new XYPlot(dataset, domain, range, renderer);
 		plot.setRenderer(0, renderer);
@@ -52,8 +59,10 @@ public class IterationsChartFrame extends ApplicationFrame implements Observer<I
 
 	@Override
 	public void notifyMe(IterationData data) {
-		totalValueSeries.add(data.getIterationNum(), data.calculateTotalTakenValue());
-		// TODO : add to beesSeries
-		beesSeries.add(data.getIterationNum(), data.calculateTotalTakenValue() / 2); // mockup
+		totalValueSeries.add(data.getIterationNum(), data.getTotalTakenValue());
+		// FIXME : consider putting this in a separate chart
+		for (double solutionValue : data.getSolutionsValues()) {
+			beesSeries.add(data.getIterationNum(), solutionValue);
+		}
 	}
 }

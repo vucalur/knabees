@@ -23,12 +23,11 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 
 import pl.edu.agh.bo.knabees.alg.BeesAlgorithm;
 import pl.edu.agh.bo.knabees.communication.FileParsingException;
-import pl.edu.agh.bo.knabees.objects.Item;
-import pl.edu.agh.bo.knabees.objects.Knapsack;
+import pl.edu.agh.bo.knabees.model.Item;
+import pl.edu.agh.bo.knabees.model.Knapsack;
 import pl.edu.agh.bo.knabees.utils.Utils;
 
 @SuppressWarnings("serial")
@@ -81,7 +80,7 @@ public class ItemsAndKnapsacksPanel extends JPanel implements DataHolder {
 						}
 						loadData(dataRead);
 					} else {
-						logger.log(Priority.INFO, "Open command cancelled by user.");
+						logger.info("Open command cancelled by user.");
 					}
 				}
 			}
@@ -128,6 +127,7 @@ public class ItemsAndKnapsacksPanel extends JPanel implements DataHolder {
 		loadedDataPanel.add(new JLabel("Items:"));
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		loadedDataPanel.add(scrollPane);
 
 		itemsList = new JList<String>();
