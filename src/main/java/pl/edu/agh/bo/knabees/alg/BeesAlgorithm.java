@@ -18,8 +18,6 @@ public class BeesAlgorithm extends Observable<IterationData> {
 	private boolean solution[];
 	private int dimensions;
 	private int itemsAmount;
-	// private Map<Integer, Integer> solutionsCount = new HashMap<Integer,
-	// Integer>();
 
 	// consts
 	private int nBee;// scoutBees
@@ -30,33 +28,14 @@ public class BeesAlgorithm extends Observable<IterationData> {
 	// patch includes Site
 	private int nep;// number of bees recruited for the selected sites
 
-	private int alpha = 1;
-	private int beta = 1;
-	private int gamma = 2;
-	private int alphaPrim = 1;
-	private int betaPrim = 1;
-	private int gammaPrim = 1;
-	private int alphaBis = 2;
-	private int betaBis = 1;
-	private int gammaBis = 0;
-	private double probability0 = 0.2f;
-	private double probability1 = 0.8f;
-	private double probability0Prim = 0.1f;
-	private double probability1Prim = 0.9f;
 	// consts-end
 	int maxIterations;
-
-	int visitedCount[];
 
 	private Random rand = new Random();
 	{
 		// FIXME: Wouldn't it be better just to allow the default constructor
 		// initialize the seed properly ?
 		rand.setSeed((long) (Math.random() * 1000));
-	}
-
-	private int df(int j) {
-		return visitedCount[j];
 	}
 
 	public static class Builder {
@@ -143,13 +122,11 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		this.items = builder.items;
 		dimensions = knapsack.getDimension();
 		itemsAmount = builder.items.length;
-		// this.maxIterations = builder.maxIterations;//TODO
 		this.maxIterations = builder.maxIterations;
 		this.nBee = builder.nBee;
 		this.nSite = builder.nSite;
 		this.ngh = builder.ngh;
 		this.nep = builder.nep;
-		visitedCount = new int[itemsAmount];
 	}
 
 	private double itemsWeightSum(boolean matrix[], int dimension) {
@@ -160,7 +137,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		return result;
 	}
 
-	// funkcja celu
+	// objective function
 	private double itemsValue(boolean matrix[]) {
 		double value = 0;
 		for (int i = 0; i < matrix.length; i++)
@@ -174,62 +151,6 @@ public class BeesAlgorithm extends Observable<IterationData> {
 			if (itemsWeightSum(matrix, i) > knapsack.getLimit(i))
 				return false;
 		return true;
-	}
-
-	private double evaluateProbability(int j, double[] fj, double alpha, double beta, double gamma) {
-		double maxC = maxC();
-		double maxSPrim = maxSPrim();
-		double maxDF = maxDF();
-		double duzaSuma = 0.0;
-
-		for (int i = 0; i < dimensions; i++) {
-			duzaSuma += (items[j].getWeight(i) / (b(i) * b(i)));
-		}
-		double test = fj[j] * Math.pow(maxDF / df(j), gamma) * Math.pow(items[j].getValue() / maxC, alpha)
-				/ Math.pow(duzaSuma / maxSPrim, beta);
-		// System.out.println(test);
-		// return test;
-		return 1;// TODO
-	}
-
-	private int maxDF() {
-		int max = 0;
-		int actual;
-		for (int i = 0; i < itemsAmount; i++) {
-			actual = df(i);
-			max = actual > max ? actual : max;
-		}
-		return max;
-	}
-
-	private double maxSPrim() {
-		double max = 0;
-		double sum;
-		for (int j = 0; j < itemsAmount; j++) {
-			sum = 0;
-			for (int i = 0; i < dimensions; i++) {
-				sum += (items[j].getWeight(i) / (b(i) * b(i)));
-			}
-			max = sum > max ? sum : max;
-		}
-
-		return max;
-	}
-
-	private double maxC() { // TODO
-		double maximum = items[0].getValue();
-		for (int i = 1; i < itemsAmount; i++)
-			if (items[i].getValue() > maximum)
-				maximum = items[i].getValue();
-		return maximum;
-	}
-
-	double b(int i) {
-		double sum = 0;
-		for (Item it : items) {
-			sum += it.getWeight(i);
-		}
-		return sum;
 	}
 
 	private boolean[] randomizeSolution() {
@@ -246,30 +167,16 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		return solution;
 	}
 
-	public int rws(double[] fj, boolean items[], double alpha, double beta, double gamma) {
+	public int rws(boolean items[]) {
 		double probabilitySum = 0, p = 0;
 		double randomNumber;
 		for (int i = 0; i < itemsAmount; i++)
-			probabilitySum += items[i] ? evaluateProbability(i, fj, alpha, beta, gamma) : 0;
+			probabilitySum += items[i] ? 1 : 0;
 		randomNumber = Math.random() * probabilitySum;
 		// System.out.println(probabilitySum);
 		for (int i = 0; i < itemsAmount; i++) {
-			p += items[i] ? evaluateProbability(i, fj, alpha, beta, gamma) : 0;
+			p += items[i] ? 1 : 0;
 
-			if (p >= randomNumber)
-				return i;
-		}
-		return -1;
-	}
-
-	public int rws2(double[] fj, boolean items[], double alpha, double beta, double gamma) {
-		double probabilitySum = 0, p = 0;
-		double randomNumber;
-		for (int i = 0; i < itemsAmount; i++)
-			probabilitySum += items[i] ? 1.0 / evaluateProbability(i, fj, alpha, beta, gamma) : 0;
-		randomNumber = Math.random() * probabilitySum;
-		for (int i = 0; i < itemsAmount; i++) {
-			p += items[i] ? 1.0 / evaluateProbability(i, fj, alpha, beta, gamma) : 0;
 			if (p >= randomNumber)
 				return i;
 		}
@@ -304,15 +211,9 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		boolean x[] = new boolean[itemsAmount];
 		boolean S[] = new boolean[itemsAmount];
 		int t;
-		for (int i = 0; i < itemsAmount; i++) {
-			if (rand.nextInt() % 3 == 0)
-				fj[i] = probability0;
-			else
-				fj[i] = probability1;
-		}
 		S = safeSet(x);
 		while (setNotEmpty(S)) {
-			t = rws(fj, S, alpha, beta, gamma);
+			t = rws(S);
 			x[t] = true;
 			S = safeSet(x);
 		}
@@ -328,7 +229,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		boolean Jk[] = new boolean[itemsAmount];
 		int t;
 		while (powerOfSet(Jk) < k) {
-			t = rws2(fj, S, alphaBis, betaBis, gammaBis);
+			t = rws(S);
 			if (t == -1)
 				break;
 			Jk[t] = true;
@@ -347,31 +248,15 @@ public class BeesAlgorithm extends Observable<IterationData> {
 	}
 
 	public boolean[] solutionFromNeighbourhood(boolean[] solutionJx, int k) {
-		double pj[] = new double[itemsAmount];
-		double pjprim[] = new double[itemsAmount];
-		double prob0prim[] = new double[itemsAmount];
-		double prob1prim[] = new double[itemsAmount];
-		for (int i = 0; i < itemsAmount; i++) {
-			prob0prim[i] = probability0Prim;
-			prob1prim[i] = probability1Prim;
-		}
-
 		boolean[] x = Arrays.copyOf(solutionJx, itemsAmount);
 		boolean[] Jk = evaluateJk(solutionJx, k);
 		for (int i = 0; i < itemsAmount; i++)
 			if (Jk[i])
 				x[i] = false;
 
-		/*
-		 * for (int j = 0; j < itemsAmount; j++) { if (Jk[j]) pj[j] =
-		 * evaluateProbability(j, prob0prim, alphaPrim, betaPrim, gammaPrim);
-		 * else pjprim[j] = evaluateProbability(j, prob1prim, alphaPrim,
-		 * betaPrim, gammaPrim); }
-		 */
-
 		boolean[] S = safeSet(x);
 		while (setNotEmpty(S)) {
-			int t = rws(prob0prim, S, alphaPrim, betaPrim, gammaPrim);
+			int t = rws(S);
 			x[t] = true;
 			if (!checkSolution(x))
 				throw new RuntimeException();
