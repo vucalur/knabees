@@ -23,6 +23,7 @@ public class IterationsChartFrame extends IconisedJFrame implements Observer<Ite
 	private JFreeChart chart;
 	private XYSeries totalValueSeries;
 	private XYSeries beesSeries;
+	private XYPlot plot;
 
 	public IterationsChartFrame() {
 		super("Solutions chart");
@@ -48,13 +49,17 @@ public class IterationsChartFrame extends IconisedJFrame implements Observer<Ite
 		Stroke boldLine = new BasicStroke(1.5f);
 		renderer.setSeriesStroke(0, boldLine);
 
-		XYPlot plot = new XYPlot(dataset, domain, range, renderer);
+		plot = new XYPlot(dataset, domain, range, renderer);
 		plot.setRenderer(0, renderer);
 		plot.setNotify(true);
 		chart = new JFreeChart("Total value taken", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
 		ChartPanel chartPanel = new ChartPanel(chart);
 		setContentPane(chartPanel);
 		pack(); // must occur after adding all components
+
+		// turning on and off showing bees :
+		// ((XYLineAndShapeRenderer)
+		// plot.getRenderer()).setSeriesShapesVisible(1, true);
 	}
 
 	@Override

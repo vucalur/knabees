@@ -79,7 +79,9 @@ public class KnabeesGUI extends IconisedJFrame {
 					itemsAndKnapsacksPanel.getItems());
 			algorithmParamsPanel.loadDataTo(builder);
 
-			itemsAndKnapsacksPanel.clearData();
+			if (itemsAndKnapsacksPanel.isClearingApplicable()) {
+				itemsAndKnapsacksPanel.clearData();
+			}
 			algorithmParamsPanel.clearData();
 
 			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {

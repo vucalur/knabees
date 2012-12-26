@@ -3,7 +3,6 @@ package pl.edu.agh.bo.knabees.ui;
 import java.awt.GridLayout;
 
 import javax.naming.OperationNotSupportedException;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -25,7 +24,6 @@ public class AlgorithmParamsPanel extends JPanel implements DataHolder {
 	private JSpinner nghSpinner;
 	private JSpinner nepSpinner;
 	private JSpinner maxIterationsSpinner;
-	private JCheckBox flagCheckBox;
 
 	AlgorithmParamsPanel() {
 		initilize();
@@ -44,8 +42,6 @@ public class AlgorithmParamsPanel extends JPanel implements DataHolder {
 		addSpinnerTo(mainPanel, "ngh", nghSpinner = new JSpinner());
 		addSpinnerTo(mainPanel, "nep", nepSpinner = new JSpinner());
 		addSpinnerTo(mainPanel, "maxIterations", maxIterationsSpinner = new JSpinner());
-		// FIXME : ↓ fix label in the release version
-		addCheckBoxTo(mainPanel, "falg (unused so far)", flagCheckBox = new JCheckBox());
 
 		add(mainPanel);
 	}
@@ -55,18 +51,12 @@ public class AlgorithmParamsPanel extends JPanel implements DataHolder {
 		target.add(spinner);
 	}
 
-	private void addCheckBoxTo(JPanel target, String labelTitle, JCheckBox checkBox) {
-		target.add(new JLabel(labelTitle));
-		target.add(checkBox);
-	}
-
 	public void loadDataTo(BeesAlgorithm.Builder builder) {
 		builder.nBee((int) nBeeSpinner.getValue());
 		builder.nSite((int) nSiteSpinner.getValue());
 		builder.ngh((int) nghSpinner.getValue());
 		builder.nep((int) nepSpinner.getValue());
 		builder.maxIterations((int) maxIterationsSpinner.getValue());
-		// FIXME : flagCheckBox
 	}
 
 	@Override
@@ -81,8 +71,6 @@ public class AlgorithmParamsPanel extends JPanel implements DataHolder {
 		nghSpinner.setValue(defaultsSource.getNgh());
 		nepSpinner.setValue(defaultsSource.getNep());
 		maxIterationsSpinner.setValue(defaultsSource.getMaxIterations());
-		flagCheckBox.setSelected(true); // FIXME : provide proper default for
-										// the flag
 	}
 
 	@Override

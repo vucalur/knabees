@@ -14,6 +14,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -40,6 +41,8 @@ public class ItemsAndKnapsacksPanel extends JPanel implements DataHolder {
 	private JTextField knapsackTextField;
 	private JList<String> itemsList;
 	private DefaultListModel<String> itemsListModel;
+	private JCheckBox clearOnCalculateCheckBox;
+	private JButton calculateButton;
 
 	ItemsAndKnapsacksPanel(Action calculateAction) {
 		initilize(calculateAction);
@@ -147,10 +150,13 @@ public class ItemsAndKnapsacksPanel extends JPanel implements DataHolder {
 			}
 		});
 
-		JButton calculateButton = new JButton("Calculate !");
+		calculateButton = new JButton("Calculate !");
 		calculateButton.setAction(calculateAction);
 
 		bottomButtonsPanel.add(removeSelectedButton);
+		bottomButtonsPanel.add(Box.createRigidArea(new Dimension(80, 0)));
+		clearOnCalculateCheckBox = new JCheckBox("Clear on calculate", false);
+		bottomButtonsPanel.add(clearOnCalculateCheckBox);
 		bottomButtonsPanel.add(Box.createRigidArea(new Dimension(20, 0)));
 		bottomButtonsPanel.add(calculateButton);
 		loadedDataPanel.add(bottomButtonsPanel);
@@ -164,6 +170,10 @@ public class ItemsAndKnapsacksPanel extends JPanel implements DataHolder {
 		for (Item item : data.getItems()) {
 			itemsListModel.addElement(item.toString());
 		}
+	}
+
+	public boolean isClearingApplicable() {
+		return clearOnCalculateCheckBox.isSelected();
 	}
 
 	@Override
