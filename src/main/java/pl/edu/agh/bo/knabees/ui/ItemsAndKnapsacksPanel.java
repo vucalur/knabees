@@ -2,6 +2,7 @@ package pl.edu.agh.bo.knabees.ui;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -165,11 +166,16 @@ public class ItemsAndKnapsacksPanel extends JPanel implements DataHolder {
 	}
 
 	@Override
-	public void loadData(BeesAlgorithm.Builder data) {
-		knapsackTextField.setText(data.getKnapsack().toString());
-		for (Item item : data.getItems()) {
-			itemsListModel.addElement(item.toString());
-		}
+	public void loadData(final BeesAlgorithm.Builder data) {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				knapsackTextField.setText(data.getKnapsack().toString());
+				for (Item item : data.getItems()) {
+					itemsListModel.addElement(item.toString());
+				}
+			}
+		});
 	}
 
 	public boolean isClearingApplicable() {
