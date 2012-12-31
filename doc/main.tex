@@ -64,7 +64,6 @@ Skład zespołu:\end{Large}
 
 \onehalfspacing
 
-%\rhead{\scriptsize{Maria}}
 \lhead{\scriptsize{Wałaszewska, Szalecki, Krzystek, Wilaszek}}
 
 \lfoot{\scriptsize{Copyright \textcopyright 2012 AGH}}
@@ -96,9 +95,25 @@ osoby (tych osób) lub odpowiednich władz AGH.
 \tableofcontents
 
 \chapter{Tematyka projektu}
+\section{Opis zadania}
+Zadaniem projektowym jest zaimplementowanie w dowolnie wybranej technologi aplikacji
+realizującej aproksymację rozwiązania wybranego problemu NP-trudnego
+za pomocą tzw. algorytmu stadnego (ang. \emph{swarm intelligence}).\\
+Nasz zespół wybrał wielowymiarowy problem plecakowy, a jako algorytm:
+algorytm pszczeli.
+Aplikacja powinna udostępniać pewien sposób wprowadzania danych wejściowych algorytmu,
+oraz powinna przedstawiać wyniki działania algorytmu w określony z prowadzącą sposób.\de
+Zostały ustalone do zrealizowania 2 rodzaje prezentacji wyników działania algorymtu:
+\begin{enumerate}
+	\item	Wykres całkowitej wartości plecaków wziętych do plecaka
+			w zależności od numeru iteracji
+	\item	Widok odpowiadający na pytanie: ''Czy dany przedmiot został wzięty
+			do plecaka w danej iteracji ?''
+			Forma widoku dowolna.
+\end{enumerate}
 
-\chapter{Wielowymiarowy problem plecakowy}
-\section{Definicja}
+\section{Wielowymiarowy problem plecakowy}
+\subsection{Definicja}
 W ramach projektu zajmiemy się rozwiązywaniem wielowymiarowego problemu plecakowego.
 Problem ten zdefiniowany jest następująco.
 
@@ -113,7 +128,7 @@ $$\bigforall_{1 \le i \le m}\quad\sum_{j=1}^n w_{ij}\chi_j \le W_i$$
 gdzie $\chi_j \in \{0, 1\}$, wartość $\chi_j=1$
 oznacza użycie $j$-tego przedmiotu.
 
-\section{Intuicja}
+\subsection{Wielowymiarowy problem plecakowy - Intuicja}
 Nie należy mylnie utożsamiać wymiarów w problemie plecakowym z 
 wymiarami przestrzeni. Intuicyjnie problem można rozumieć jako zadanie
 zapakowania plecaka tak, aby sumaryczna wartość (cena)
@@ -132,7 +147,7 @@ ani ich geometrycznych własności. Jest to konsekwencja tego, że każdy
 wymiar rozpatrujemy osobno. Dlatego nie można myśleć o rozmiarach
 przedmiotu jak o rozmiarach geometrycznych.
 
-\section{Złożoność}
+\subsection{Złożoność}
 Wielowymiarowy problem plecakowy dla liczby wymiarów $m \ge 2$ jest
 problemem NP-zupełnym. Tym samym nie znamy rozwiązującego go
 algorytmu o złożoności wielomianowej. Dla uzyskania rozwiązania
@@ -219,8 +234,108 @@ Danymi wejściowymi dla algorytmu są:
 %\end{enumerate}
 
 \chapter{Opis aplikacji}
-\section{Podręcznik użytkownika}
-\subsection{Format wejścia}
+\section{Uruchamianie}
+Aplikacja została zrealizowana w technologi Java, dlatego do jej uruchomienia będzie
+potrzebne środowisko JRE\footnote{Bądź JDK} w wersji 1.7 lub nowszej.
+Znajdując się w katalogu, w którym został umieszczony plik \texttt{knabees-1.0-jar-with-dependencies.jar}
+należy wydać polecenie:
+\begin{verbatim}
+java -jar knabees-1.0-jar-with-dependencies.jar
+\end{verbatim}
+Użytkownikowi powinno ukazać się główne okno aplikacji z aktywną zakładką ustalania parametrów
+algorytmu.
+
+\section{Działanie aplikacji}
+Startowe okno aplikacji podzielono na dwie części -- zakładki:
+\begin{enumerate}
+	\item	Zakładkę ustawiania parametrów algorytmu
+	\item	Zakładkę wprowadzania parametrów plecaka i przedmiotów
+\end{enumerate}
+Pomiędzy zakładkami możemy się swobodnie poruszać.
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{params.png}
+\caption{Aplikacja zaraz po uruchomieniu --- zakładka ustawiania parametrów algorytmu}
+\label{fig:params}
+\end{figure}
+
+\subsection{Ładowanie danych wejściowych}
+W drugiej zakładce mamy dostępne dwie metody ładowania parametrów plecaka oraz przedmiotów:
+\begin{enumerate}
+	\item	\textsc{Ładowanie z pliku tekstowego}.\\
+			Format danych powinien być zgodny z tym opisanym w \ref{format}.
+			Należy przycisnąć przycisk ''Load items\&knapsack'', pojawi się nowe okno, w którym możemy wybrać plik z danymi.
+			Jeżeli format pliku jest poprawny w odpowiednie pole tekstowe zostaną załadowane wymiary plecaka,
+			oraz zostanie wypełniona lista przedmiotów.
+			O powodzeniu parsowania pliku informować będzie pole statusu po prawej stronie przycisku ładowania pliku.
+			(Patrz: Rysunek \ref{fig:load})\\
+			\textbf{Uwaga:} Ponowne załadowanie danych z pliku spowoduje \textbf{nadpisanie} plecaka nowym plecakiem,
+			oraz \textbf{dodanie} nowych przedmiotów do listy, a nie usunięcie starych.
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{file_tooltip.png}
+			\caption{Ładowanie danych z pliku}
+			\label{fig:load}
+			\end{figure}
+	\item	\textsc{Generowanie losowych danych}
+			Pojawi się dodatkowe okno, w którym mozemy ustawić parametry danych losowych.
+			Dostępne parametry generowania losowego przedstawia rysunek \ref{fig:generate}.\\
+			\textbf{Uwaga:} Ponowne wygenerowanie danych losowych spowoduje \textbf{nadpisanie}
+			zarówno plecaka jak i przedmiotów nowymi danymi.
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{generate.png}
+			\caption{Okno generowania losowych danych}
+			\label{fig:generate}
+			\end{figure}
+\end{enumerate}
+Po załadowaniu danych będą one widoczne w tej samej zakładce (Rysunek \ref{fig:ki}).
+Przed uruchomieniem algorytmu mamy możliwość usunięcia wybranych przedmiotów z listy.
+Obliczenia uruchamiamy wciskając przycisk ''Calculate''.
+Zaznaczenie flagi ''Clear on calculate'' spowoduje skasowanie danych plecaka i przedmiotów.\\
+Jeśli chcemy testować działanie algorytmu na tych samych danych wielokrotnie,
+należy flagę odznaczyć (domyślnie jest odznaczona).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{k&i.png}
+\caption{Załadowane dane}
+\label{fig:ki}
+\end{figure}
+
+\subsection{Prezentacja wyników obliczeń}
+Po uruchomieniu algorytmu pojawią się dwa okna:
+\begin{enumerate}
+	\item	Wykres zmian całkowitej wartości przedmiotów wziętych do plecaka
+			w zależności od numeru iteracji.\\
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{chart.png}
+			\caption{Wykres}
+			\label{fig:chart}
+			\end{figure}
+			Dodatkowo wykres prezentuje intrygujące skupiska niebieskich kropek.\\
+			Przyczyny ich powstawania do dziś pozostają niewyjaśnioną przez
+			naukowców tajemnicą. // FIXME, TODO
+	\item	Okno statusu (wybrany / niewybrany) przedmiotów w danej iteracji.\\
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{chosen_items.png}
+			\caption{Okno statusu przedmiotów}
+			\label{fig:chosen_items}
+			\end{figure}
+			Używając listy rozwijanej na górze możemy wybrać numer iteracji,
+			lista automatycznie zostanie odświeżona danymi z wybranej iteracji.
+			Pusty, szary kwadracik oznacza przedmiot niewybrany, kwadracik z niebiesko-czarnym
+			zaznaczeniem --- przedmiot wybrany.
+\end{enumerate}
+Informacje przezentowane w oknach są automatycznie odświeżane po zakończeniu iteracji
+algorytmu. Na ogół zakończenie całego algorytmu (tj. wybranej liczby iteracji) następuje
+stosunkowo szybko i nie mamy możliwości podglądu "na żywo".\\
+\textbf{Uwaga:} Zamknięcie któregokolwiek z okien spowoduje zakończenie działania aplikacji.
+
+
+\subsection{Format pliku z danymi wejściowymi} \label{format}
 Plik z danymi wejściowymi problemu plecakowego powinien być następującej postaci. W pierwszej
 linii wejścia znajdują się dwie liczby naturalne $m$, $n$ oznaczające kolejno liczbę wymiarów
 oraz liczbę dostępnych przedmiotów. W drugiej linii wejścia znajduje się $m$~liczb rzeczywistych oddzielonych
@@ -229,31 +344,70 @@ Pojedyncza linia opisująca $j$-ty~przedmiot składa się z $m+1$~liczb rzeczywi
 Pierwsza z nich to $p_j$~--~wartość (cena)
 przedmiotu. Kolejne $m$ liczb oznacza kolejne rozmiary przedmiotu $w_{ij}$  ($1 \le i \le m$).
 
-\subsection{Instalacja}
 
 \chapter{Podsumowanie}
+\section{Użyte technologie}
+Aplikacja została wykonana w technologii Java 1.7
+jako aplikacja stacjonarna,
+dodatkowo użyto technologie pokrewne wymienione poniżej.
+\begin{itemize}
+	\item	\textbf{GUI}\quad Do wykonania interfejsu graficznego posłużyła biblioteka standardowa Swing
+	\item	\textbf{Wykresy}\quad Do tworzenia wykresów użyto biblioteki JFreeChart w wersji 1.0.13
+	\item	\textbf{Budowa}\quad Cały proces budowania i kontroli zależności był nadzorowany przez narzędzie
+					Maven3
+	\item	\textbf{Logowanie}\quad biblioteka Log4j 1.2.17
+\end{itemize}
 
-\chapter{Podział pracy}
+\section{Użyte narzędzia}
+\begin{itemize}
+	\item	\textbf{Dokumentacja}\quad \LaTeX
+	\item	\textbf{Synchronizacja}\quad (Zarówno dokumentacja jak i kod aplikacji) : system kontroli wersji git
+			z repozytowium w serwisie bitbucket
+	\item	\textbf{IDE\quad} Eclipse Juno 4.2 J2EE z rozszerzeniami, m. in. m2eclipse, EGit
+	\item	\textbf{System operacyjny}\quad Całość prac przeprowadzono na systemach Linux
+\end{itemize}
+
+\section{Podział pracy}
+\begin{description}
+	\item[Algorytm] Martyna Wałaszewska, Rafał Szalecki
+	\item[Aplikacja] Grzegorz Wilaszek (wykresy), Wojciech Krzystek (aplikacja, setup)
+	\item[Dokumentacja] wszyscy członkowie zespołu
+\end{description}
+
 
 \addtocounter{page}{-1}
 
 \appendix
-\chapter*{Załączniki}
+\chapter*{Zawartość płyty CD}
 \begin{description}
-	\item[plik blah.pdf]	 --- blahblah - Pierwszy załącznik
+	\item[plik main.pdf]	 --- plik z tą dokumentacją (dodatkowo dokumentacja jest oddawana w formie drukowanej)
+	\item[folder knabees]	 --- folder z kompletnym kodem źródłowym aplikacji
+	\item[plik knabees-1.0-jar-with-dependencies.jar]	 --- plik jar zbudowanej aplikacji Javowej
+	\item[pokaz.avi]	 --- krótki filmik demonstrujący działanie aplikacji
 \end{description}
 
 \begin{thebibliography}{9}
 
 \bibitem{enwiki}
 	\href{http://en.wikipedia.org/wiki/List_of_knapsack_problems}{http://en.wikipedia.org/wiki/List\_of\_knapsack\_problems}
+\bibitem{swing}
+	\href{http://docs.oracle.com/javase/tutorial/uiswing/components/index.html}{Java tutorials, Lesson: Using Swing Components}
+\bibitem{mvnex}
+	\href{http://www.sonatype.com/Support/Books/Maven-By-Example}{Sonatype, Maven By Example}
+\bibitem{mvntcr}
+	\href{http://www.sonatype.com/Support/Books/Maven-The-Complete-Reference}{Sonatype, Maven: The Complete Reference}
+\bibitem{progit}
+	\href{http://git-scm.com/book/}{Scott Chacon, Pro Git}
+\bibitem{java2s}
+	\href{http://www.java2s.com/Code/Java/Chart/CatalogChart.htm}{Java2S - Programming tutorials and source code examples: Charting}
+\bibitem{stack}
+	\href{http://stackoverflow.com/}{Stackoverflow}
 
 \end{thebibliography}
 
 
 \listoffigures
 
-\listoftables
 
 \label{LastPage}\phantom{\phantomsection{LastPage}}
 \end{document}
