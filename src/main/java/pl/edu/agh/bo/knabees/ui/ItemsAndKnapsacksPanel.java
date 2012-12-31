@@ -64,9 +64,9 @@ public class ItemsAndKnapsacksPanel extends JPanel implements DataHolder {
 		fileStatusField.setEditable(false);
 		fileStatusField.setToolTipText("File load status");
 
-		openFileButton = new JButton("Load items & knapsacks");
-		openFileButton.setToolTipText("<html>File should be a plain text file, containing lines describing items &amp; knapsacks:<br/>"
-				+ "please refer to documentation for additional info about input format</html>");
+		openFileButton = new JButton("Load items & knapsack");
+		openFileButton.setToolTipText("<html>File should be a plain text file, containing lines describing items &amp; knapsack:<br/>"
+				+ "please refer to the documentation for additional info about input format</html>");
 		fileChooser = new JFileChooser();
 		openFileButton.addActionListener(new ActionListener() {
 			@Override
