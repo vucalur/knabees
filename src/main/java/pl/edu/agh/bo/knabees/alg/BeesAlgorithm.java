@@ -31,13 +31,6 @@ public class BeesAlgorithm extends Observable<IterationData> {
 	// consts-end
 	int maxIterations;
 
-	private Random rand = new Random();
-	{
-		// FIXME: Wouldn't it be better just to allow the default constructor
-		// initialize the seed properly ?
-		rand.setSeed((long) (Math.random() * 1000));
-	}
-
 	public static class Builder {
 		// required
 		private Knapsack knapsack;
@@ -153,20 +146,6 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		return true;
 	}
 
-	private boolean[] randomizeSolution() {
-		int elementNumber;
-		boolean solution[] = new boolean[itemsAmount];
-		for (int i = 0; i < itemsAmount; i++) {
-			elementNumber = (int) (itemsAmount * Math.random());
-			solution[elementNumber] = true;
-			if (!checkSolution(solution)) {
-				solution[elementNumber] = false;
-				break;
-			}
-		}
-		return solution;
-	}
-
 	public int rws(boolean items[]) {
 		double probabilitySum = 0, p = 0;
 		double randomNumber;
@@ -271,7 +250,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 
 		// initial solution (random)
 		for (int i = 0; i < nBee; i++) {
-			solutions.add(randomizeSolution());
+			solutions.add(generateSolution());
 		}
 
 		for (int nIteration = 1; nIteration <= maxIterations; nIteration++) {
@@ -298,9 +277,8 @@ public class BeesAlgorithm extends Observable<IterationData> {
 				for (int j = 0; j < nep; ++j) {
 					newSolutions.add(solutionFromNeighbourhood(solutions.get(i), ngh));
 				}
-			}// maybe we should delete identical solutions from solution list,
-				// shouldn't we?
-			for (int i = 0; i < nBee - nSite * nep; ++i) {
+			}
+			for (int i = 0; i < nBee - nSite * (nep+1); ++i) {
 				newSolutions.add(generateSolution());
 			}
 			solutions = newSolutions;

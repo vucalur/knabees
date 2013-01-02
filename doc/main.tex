@@ -102,14 +102,13 @@ za pomocą tzw. algorytmu stadnego (ang. \emph{swarm intelligence}).\\
 Nasz zespół wybrał wielowymiarowy problem plecakowy, a jako algorytm:
 algorytm pszczeli.
 Aplikacja powinna udostępniać pewien sposób wprowadzania danych wejściowych algorytmu,
-oraz powinna przedstawiać wyniki działania algorytmu w określony z prowadzącą sposób.\de
+oraz powinna przedstawiać wyniki działania algorytmu w uzgodniony z prowadzącą sposób.\de
 Zostały ustalone do zrealizowania 2 sposoby prezentacji wyników działania algorymtu:
 \begin{enumerate}
-	\item	Wykres całkowitej wartości plecaków wziętych do plecaka
+	\item	Wykres całkowitej wartości przedmiotów wziętych do plecaka
 			w zależności od numeru iteracji
-	\item	Widok odpowiadający na pytanie: ''Czy dany przedmiot został wzięty
-			do plecaka w danej iteracji ?''
-			Forma widoku dowolna.
+	\item	Lista przedmiotów zapakowanych do placaka w najlepszym rozwiązaniu
+		w danej iteracji.
 \end{enumerate}
 
 \section{Wielowymiarowy problem plecakowy}
@@ -128,7 +127,7 @@ $$\bigforall_{1 \le i \le m}\quad\sum_{j=1}^n w_{ij}\chi_j \le W_i$$
 gdzie $\chi_j \in \{0, 1\}$, wartość $\chi_j=1$
 oznacza użycie $j$-tego przedmiotu.
 
-\subsection{Wielowymiarowy problem plecakowy - Intuicja}
+\subsection{Wielowymiarowy problem plecakowy -- intuicja}
 Nie należy mylnie utożsamiać wymiarów w problemie plecakowym z 
 wymiarami przestrzeni. Intuicyjnie problem można rozumieć jako zadanie
 zapakowania plecaka tak, aby sumaryczna wartość (cena)
@@ -153,7 +152,6 @@ problemem NP-zupełnym. Tym samym nie znamy rozwiązującego go
 algorytmu o złożoności wielomianowej. Dla uzyskania rozwiązania
 przybliżonego możemy stosować algorytmy aproksymacyjne, np. algorytm
 pszczeli.
-
 
 \chapter{Algorytm pszczeli}
 \section{Opis idei algorytmu}
@@ -213,11 +211,11 @@ Można krótko przedstawić ogólny zarys i ideę rozwiązywania problemów algo
 	\fe	Jeśli spełniony jest warunek stopu, to kończymy. W przeciwnym wypadku: POWRÓT DO 2.
 \end{enumerate}
 
-\chapter{Implementacja rozwiązująca wielowymiarowy problem plecakowy}
+\chapter{Implementacja algorytmu}
 \section{Dane}
 Danymi wejściowymi dla algorytmu są:
 \begin{itemize}
-\item Instancja problemu plecakowego -- oznaczenia jak w definicji
+\item Instancja problemu plecakowego
 \item Parametry sterujące algorytmem
 \begin{itemize}
 \item $nBee$ ilość rozpatrywanych rozwiązań (dostępnych pszczół)
@@ -227,11 +225,37 @@ Danymi wejściowymi dla algorytmu są:
 \item $maxIterations$ liczba iteracji
 \end{itemize}
 \end{itemize}
-%\section{Algorytm}
-%Algorytm przedstawiony przy pomocy pseudokodu:
-%\begin{enumerate}
-%	\fe	
-%\end{enumerate}
+
+\section{Algorytm}
+Algorytm przedstawiony przy pomocy pseudokodu:
+\begin{enumerate}
+	\fe Zainicjuj $nBee$ losowych rozwiązań
+	\fe For $i:=0$ to $maxIterations$ do
+		\begin{enumerate}
+			\fe Policz wartość każdego rozwiązania
+			\fe Posortuj rozwiązania według wartości
+			\fe Utwórz nowy zbiór rozwiązań zawierający:
+				\begin{itemize}
+				\item $nSite$ najlepszych rozwiązań z poprzedniej iteracji
+				\item $nep$ rozwiązań z sąsiedztwa rozmiaru $ngh$ każdego z $nSite$
+				najlepszych rozwiązań z poprzeniej iteracji
+				\item $nBee-nSite*(nep+1)$ losowo zainicjowanych rozwiązań
+				\end{itemize}
+		\end{enumerate}
+\end{enumerate}
+
+\ \\Przez rozwiązanie z sąsiedztwa rozmiaru $k$ danego rozwiązania rozumiemy
+rozwiązanie powstałe w następujący sposób:
+\begin{enumerate}
+	\fe Ze zbioru przedmiotów stanowiących rozwiązanie odejmij
+	conajwyżej $k$ dowolnych przedmiotów
+	\fe Wyznacz zbiór $S$ przedmiotów, które mogą być dołączone do rozwiązania
+	\fe Jeśli zbiór $S$ nie jest pusty, to wybierz z niego dowolny przedmiot, dołącz
+	go do rozwiązania i wróć do poprzedniego punktu
+\end{enumerate}
+
+Podobnie wybierane są losowe rozwiązania inicjujące (pszczoły-zwiadowcy).
+Na początku rozwiązanie nie zawiera żadnych przedmiotów, następnie powtarzane są kroki 2-3.
 
 \chapter{Opis aplikacji}
 \section{Uruchamianie}
@@ -250,7 +274,7 @@ Sposoby uruchamiania:
 Użytkownikowi powinno ukazać się główne okno aplikacji z aktywną zakładką ustalania parametrów
 algorytmu.
 
-\section{Działanie aplikacji}
+\section{Interfejs graficzny}
 Startowe okno aplikacji podzielono na dwie części -- zakładki:
 \begin{enumerate}
 	\item	Zakładkę ustawiania parametrów algorytmu
@@ -319,9 +343,8 @@ Po uruchomieniu algorytmu pojawią się dwa okna:
 			\caption{Wykres}
 			\label{fig:chart}
 			\end{figure}
-			Dodatkowo wykres prezentuje intrygujące skupiska niebieskich kropek.\\
-			Przyczyny ich powstawania do dziś pozostają niewyjaśnioną przez
-			naukowców tajemnicą. // FIXME, TODO
+			Ponadto na wykresie pokazane są wszystkie rozwiązania rozpatrywane w danej iteracji.
+			Niebieskie kropki pokazują wartości odwiedzonych rozwiązań.
 	\item	Okno statusu (wybrany / niewybrany) przedmiotów w danej iteracji.\\
 			\begin{figure}[H]
 			\centering
@@ -332,11 +355,9 @@ Po uruchomieniu algorytmu pojawią się dwa okna:
 			Używając listy rozwijanej na górze możemy wybrać numer iteracji,
 			lista automatycznie zostanie odświeżona danymi z wybranej iteracji.
 			Pusty, szary kwadracik oznacza przedmiot niewybrany, kwadracik z niebiesko-czarnym
-			zaznaczeniem --- przedmiot wybrany.
+			zaznaczeniem --- przedmiot wybrany w najlepszym rozwiązaniu danej iteracji.
 \end{enumerate}
-Informacje przezentowane w oknach są automatycznie odświeżane po zakończeniu iteracji
-algorytmu. Na ogół zakończenie całego algorytmu (tj. wybranej liczby iteracji) następuje
-stosunkowo szybko i nie mamy możliwości podglądu "na żywo".\\
+Informacje przezentowane w oknach są automatycznie odświeżane po zakończeniu każdej iteracji.\\
 \textbf{Uwaga:} Zamknięcie któregokolwiek z okien spowoduje zakończenie działania aplikacji.
 
 
@@ -377,8 +398,10 @@ W tym podrozdziale prezentujemy propozycje dalszego rozwoju aplikacji, jak równ
 bezpośrednio nie udało się ominąć.
 \subsection{Algorytm}
 \begin{itemize}
-	\item	Brak możliwość zatrzymania algorytmu (nie licząc zamknięcie całej aplikacji)
-	\item	\textbf{TODO, FIXME}
+	\item	Brak możliwość zatrzymania algorytmu w trakcie działania
+	\item	Porzucanie ,,nasyconych'' sąsiedztw, tj. takich które są przeszukiwane już od $p$ iteracji ($p$ to parametr)
+	\item	Obliczanie prawdopodobieństwa, że wybranie danego przedmiotu poprawi rozwiązanie i losowanie
+		zgodnie z tym rozkładem
 \end{itemize}
 
 \subsection{Warstwa prezentacji}
@@ -411,6 +434,8 @@ bezpośrednio nie udało się ominąć.
 
 \bibitem{enwiki}
 	\href{http://en.wikipedia.org/wiki/List_of_knapsack_problems}{http://en.wikipedia.org/wiki/List\_of\_knapsack\_problems}
+\bibitem{ba}
+	\href{http://www.iaeng.org/publication/IMECS2008/IMECS2008_pp84-88.pdf}{Bee Colony Algorithm for the Multidimensional Knapsack Problem}
 \bibitem{swing}
 	\href{http://docs.oracle.com/javase/tutorial/uiswing/components/index.html}{Java tutorials, Lesson: Using Swing Components}
 \bibitem{mvnex}
@@ -421,8 +446,6 @@ bezpośrednio nie udało się ominąć.
 	\href{http://git-scm.com/book/}{Scott Chacon, Pro Git}
 \bibitem{java2s}
 	\href{http://www.java2s.com/Code/Java/Chart/CatalogChart.htm}{Java2S - Programming tutorials and source code examples: Charting}
-\bibitem{stack}
-	\href{http://stackoverflow.com/}{Stackoverflow}
 
 \end{thebibliography}
 
