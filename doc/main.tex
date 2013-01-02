@@ -103,7 +103,7 @@ Nasz zespół wybrał wielowymiarowy problem plecakowy, a jako algorytm:
 algorytm pszczeli.
 Aplikacja powinna udostępniać pewien sposób wprowadzania danych wejściowych algorytmu,
 oraz powinna przedstawiać wyniki działania algorytmu w określony z prowadzącą sposób.\de
-Zostały ustalone do zrealizowania 2 rodzaje prezentacji wyników działania algorymtu:
+Zostały ustalone do zrealizowania 2 sposoby prezentacji wyników działania algorymtu:
 \begin{enumerate}
 	\item	Wykres całkowitej wartości plecaków wziętych do plecaka
 			w zależności od numeru iteracji
@@ -237,11 +237,16 @@ Danymi wejściowymi dla algorytmu są:
 \section{Uruchamianie}
 Aplikacja została zrealizowana w technologi Java, dlatego do jej uruchomienia będzie
 potrzebne środowisko JRE\footnote{Bądź JDK} w wersji 1.7 lub nowszej.
-Znajdując się w katalogu, w którym został umieszczony plik \texttt{knabees-1.0-jar-with-dependencies.jar}
-należy wydać polecenie:
-\begin{verbatim}
-java -jar knabees-1.0-jar-with-dependencies.jar
-\end{verbatim}
+Sposoby uruchamiania:
+\begin{enumerate}
+	\item	Znajdując się w katalogu, w którym został umieszczony plik \texttt{knabees-1.0-jar-with-dependencies.jar}
+			należy wydać polecenie:
+			\begin{verbatim}
+			java -jar knabees-1.0-jar-with-dependencies.jar
+			\end{verbatim}
+	\item	(tylko w systemie Windows) : Kwukliknąć plik \texttt{knabees-1.0-jar-with-dependencies.jar}
+			- system powinien rozpoznać plik jako plik uruchomieniowy JAR.
+\end{enumerate}
 Użytkownikowi powinno ukazać się główne okno aplikacji z aktywną zakładką ustalania parametrów
 algorytmu.
 
@@ -365,6 +370,22 @@ dodatkowo użyto technologie pokrewne wymienione poniżej.
 			z repozytowium w serwisie bitbucket
 	\item	\textbf{IDE\quad} Eclipse Juno 4.2 J2EE z rozszerzeniami, m. in. m2eclipse, EGit
 	\item	\textbf{System operacyjny}\quad Całość prac przeprowadzono na systemach Linux
+\end{itemize}
+
+\section{Dalszy rozwój projektu}
+W tym podrozdziale prezentujemy propozycje dalszego rozwoju aplikacji, jak również przedstawiamy napotkane problemy, których
+bezpośrednio nie udało się ominąć.
+\subsection{Algorytm}
+\begin{itemize}
+	\item	Brak możliwość zatrzymania algorytmu (nie licząc zamknięcie całej aplikacji)
+	\item	\textbf{TODO, FIXME}
+\end{itemize}
+
+\subsection{Warstwa prezentacji}
+\begin{itemize}
+	\item	Brak możliwości edycji wczytanych / wygenerowanych danych
+	\item	Brak drugiej osi X wykresu - osi czasu
+	\item	Format prezentacji statusu przedmiotów: zbiorcza tabelka dla wszystkich iteracji
 \end{itemize}
 
 \section{Podział pracy}
