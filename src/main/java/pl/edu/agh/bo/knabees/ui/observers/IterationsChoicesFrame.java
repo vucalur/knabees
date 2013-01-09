@@ -34,12 +34,14 @@ public class IterationsChoicesFrame extends IconisedJFrame implements Observer<I
 	private DefaultComboBoxModel<Integer> chooseIterationCBModel;
 	private ItemsList list;
 
+	private static int calculationsCounter = 0;
+
 	public IterationsChoicesFrame(Item[] allItems) {
 		this(Arrays.asList(allItems));
 	}
 
 	public IterationsChoicesFrame(List<Item> allItems) {
-		super("Choices in particular iteration");
+		super("Choices in particular iteration (" + ++calculationsCounter + ")");
 		initilize(allItems);
 	}
 

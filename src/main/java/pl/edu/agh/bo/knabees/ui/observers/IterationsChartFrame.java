@@ -33,8 +33,10 @@ public class IterationsChartFrame extends IconisedJFrame implements Observer<Ite
 	private int iterationWithMaxTotalValue;
 	private int takenItemsCountOnBestSolution;
 
+	private static int calculationsCounter = 0;
+
 	public IterationsChartFrame() {
-		super("Solutions chart");
+		super("Solutions chart (" + ++calculationsCounter + ")");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocation(120, 150);
 		setPreferredSize(new Dimension(700, 500));
@@ -102,7 +104,7 @@ public class IterationsChartFrame extends IconisedJFrame implements Observer<Ite
 
 					JFrame parent = new JFrame();
 					JOptionPane optionPane = new JOptionPane(MESSAGE, JOptionPane.INFORMATION_MESSAGE);
-					JDialog dialog = optionPane.createDialog(parent, "Summary - optimal solution");
+					JDialog dialog = optionPane.createDialog(parent, "Summary - optimal solution (" + calculationsCounter + ")");
 					dialog.setVisible(true);
 				}
 			});

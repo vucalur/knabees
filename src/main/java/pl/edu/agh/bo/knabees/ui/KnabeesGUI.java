@@ -82,7 +82,7 @@ public class KnabeesGUI extends IconisedJFrame {
 			if (itemsAndKnapsacksPanel.isClearingApplicable()) {
 				itemsAndKnapsacksPanel.clearData();
 			}
-			algorithmParamsPanel.clearData();
+			// algorithmParamsPanel.clearData();
 
 			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 				@Override
