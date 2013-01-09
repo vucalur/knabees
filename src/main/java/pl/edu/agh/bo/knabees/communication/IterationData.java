@@ -11,6 +11,7 @@ public final class IterationData {
 	private final double totalTakenValue;
 	private final boolean[] itemsTaken;
 	private final double[] solutionsValues;
+	private final int takenItemsCount;
 
 	public static class Builder {
 		private int iterationNum;
@@ -43,6 +44,14 @@ public final class IterationData {
 		this.totalTakenValue = builder.totalTakenValue;
 		this.itemsTaken = builder.itemsTaken;
 		this.solutionsValues = builder.solutionsValues;
+
+		int takenItemsCount = 0;
+		for (boolean isTaken : itemsTaken) {
+			if (isTaken) {
+				takenItemsCount++;
+			}
+		}
+		this.takenItemsCount = takenItemsCount;
 	}
 
 	public int getIterationNum() {
@@ -51,6 +60,10 @@ public final class IterationData {
 
 	public double getTotalTakenValue() {
 		return totalTakenValue;
+	}
+
+	public int getTakenItemsCount() {
+		return takenItemsCount;
 	}
 
 	public boolean[] getItemsTaken() {

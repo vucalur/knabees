@@ -20,6 +20,12 @@ public abstract class Observable<T> {
 		}
 	}
 
+	protected void notifyAllObserversTaksFinished() {
+		for (Observer<T> observer : observers) {
+			observer.notifyTaskFinished();
+		}
+	}
+
 	public boolean addItemsObserver(Observer<T> observer) {
 		return observers.add(observer);
 	}

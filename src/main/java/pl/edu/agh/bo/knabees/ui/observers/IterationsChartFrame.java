@@ -2,9 +2,13 @@ package pl.edu.agh.bo.knabees.ui.observers;
 
 import java.awt.BasicStroke;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Stroke;
+import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -24,6 +28,10 @@ public class IterationsChartFrame extends IconisedJFrame implements Observer<Ite
 	private XYSeries totalValueSeries;
 	private XYSeries beesSeries;
 	private XYPlot plot;
+
+	private double maxTotalValue = -1;
+	private int iterationWithMaxTotalValue;
+	private int takenItemsCountOnBestSolution;
 
 	public IterationsChartFrame() {
 		super("Solutions chart");
@@ -64,10 +72,42 @@ public class IterationsChartFrame extends IconisedJFrame implements Observer<Ite
 
 	@Override
 	public void notifyMe(IterationData data) {
-		totalValueSeries.add(data.getIterationNum(), data.getTotalTakenValue());
+		double totalTakenValue = data.getTotalTakenValue();
+
+		totalValueSeries.add(data.getIterationNum(), totalTakenValue);
 		// FIXME : consider putting this in a separate chart
 		for (double solutionValue : data.getSolutionsValues()) {
 			beesSeries.add(data.getIterationNum(), solutionValue);
+		}
+
+		if (totalTakenValue > maxTotalValue) {
+			maxTotalValue = totalTakenValue;
+			iterationWithMaxTotalValue = data.getIterationNum();
+			takenItemsCountOnBestSolution = data.getTakenItemsCount();
+		}
+	}
+
+	@Override
+	public void notifyTaskFinished() {
+		try {
+			EventQueue.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					// @formatter:off
+					String MESSAGE = "<html>Maximal total taken value in most optimal solution: " + maxTotalValue + "<br />"
+							+ "Solution found in iteration: " + iterationWithMaxTotalValue + "<br />"
+							+ "Solution picked " + takenItemsCountOnBestSolution + " items"
+							+"</html>";
+					// @formatter:on
+
+					JFrame parent = new JFrame();
+					JOptionPane optionPane = new JOptionPane(MESSAGE, JOptionPane.INFORMATION_MESSAGE);
+					JDialog dialog = optionPane.createDialog(parent, "Summary - optimal solution");
+					dialog.setVisible(true);
+				}
+			});
+		} catch (InvocationTargetException | InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 }

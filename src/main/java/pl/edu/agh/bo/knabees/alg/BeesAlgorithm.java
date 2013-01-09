@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 import pl.edu.agh.bo.knabees.communication.IterationData;
 import pl.edu.agh.bo.knabees.communication.Observable;
@@ -278,7 +277,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 					newSolutions.add(solutionFromNeighbourhood(solutions.get(i), ngh));
 				}
 			}
-			for (int i = 0; i < nBee - nSite * (nep+1); ++i) {
+			for (int i = 0; i < nBee - nSite * (nep + 1); ++i) {
 				newSolutions.add(generateSolution());
 			}
 			solutions = newSolutions;
@@ -317,6 +316,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		}
 		System.out.println("\t(" + big_price + ")");
 		// TODO: end of tests
+		notifyAllObserversTaksFinished();
 	}
 
 	public boolean[] getSolution() {

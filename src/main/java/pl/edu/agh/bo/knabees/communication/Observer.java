@@ -6,4 +6,6 @@ package pl.edu.agh.bo.knabees.communication;
  */
 public interface Observer<T> {
 	void notifyMe(T data);
+
+	void notifyTaskFinished();
 }

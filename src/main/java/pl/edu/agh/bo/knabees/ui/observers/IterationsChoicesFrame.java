@@ -99,4 +99,9 @@ public class IterationsChoicesFrame extends IconisedJFrame implements Observer<I
 		}
 		list.setUsed(data.getIterationNum(), usedSet);
 	}
+
+	@Override
+	public void notifyTaskFinished() {
+		// not applicable - do nothing
+	}
 }
