@@ -80,7 +80,7 @@ Skład zespołu:\end{Large}
 \fbox{\begin{minipage}{0.8\textwidth}
 \footnotesize Niniejsze opracowanie powstało w trakcie i jako rezultat zajęć dydaktycznych z przedmiotu 
 wymienionego na stronie tytułowej, prowadzonych w Akademii Górniczo-Hutniczej w Krakowie
-(AGH) przez osobę (osoby) wymienioną (wymienione) po słowach "Prowadzący zajęcia"
+(AGH) przez osobę (osoby) wymienioną (wymienione) po słowach "Prowadzący przedmiot"
 i nie może być wykorzystywane w jakikolwiek sposób i do jakichkolwiek celów, 
 w całości lub części, w szczególności publikowane w jakikolwiek sposób
 i w jakiejkolwiek formie, bez uzyskania uprzedniej, pisemnej zgody tej
@@ -126,6 +126,7 @@ przy jednoczesnym zachowaniu nierówności
 $$\bigforall_{1 \le i \le m}\quad\sum_{j=1}^n w_{ij}\chi_j \le W_i$$
 gdzie $\chi_j \in \{0, 1\}$, wartość $\chi_j=1$
 oznacza użycie $j$-tego przedmiotu.
+
 
 \subsection{Wielowymiarowy problem plecakowy -- intuicja}
 Nie należy mylnie utożsamiać wymiarów w problemie plecakowym z 
@@ -336,7 +337,7 @@ należy flagę odznaczyć (domyślnie jest odznaczona).
 Po uruchomieniu algorytmu pojawią się dwa okna:
 \begin{enumerate}
 	\item	Wykres zmian całkowitej wartości przedmiotów wziętych do plecaka
-			w zależności od numeru iteracji.\\
+			w zależności od numeru iteracji. (Patrz: Rysunek \ref{fig:chart})\\
 			\begin{figure}[h]
 			\centering
 			\includegraphics[width=1.0\textwidth]{chart.png}
@@ -345,7 +346,7 @@ Po uruchomieniu algorytmu pojawią się dwa okna:
 			\end{figure}
 			Ponadto na wykresie pokazane są wszystkie rozwiązania rozpatrywane w danej iteracji.
 			Niebieskie kropki pokazują wartości odwiedzonych rozwiązań.
-	\item	Okno statusu (wybrany / niewybrany) przedmiotów w danej iteracji.\\
+	\item	Okno statusu (wybrany / niewybrany) przedmiotów w danej iteracji. (Patrz: Rysunek \ref{fig:chosen_items})\\
 			\begin{figure}[h]
 			\centering
 			\includegraphics[width=0.8\textwidth]{chosen_items.png}
@@ -356,9 +357,16 @@ Po uruchomieniu algorytmu pojawią się dwa okna:
 			lista automatycznie zostanie odświeżona danymi z wybranej iteracji.
 			Pusty, szary kwadracik oznacza przedmiot niewybrany, kwadracik z niebiesko-czarnym
 			zaznaczeniem --- przedmiot wybrany w najlepszym rozwiązaniu danej iteracji.
+	\item	Dodatkowo po zakończeniu działania algorytmu pojawi się okno podsumowujące najlepsze wybrane rozwiązanie:
+			(Patrz: Rysunek \ref{fig:summary})
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.55\textwidth]{summary.png}
+			\caption{Okno podsumowujące najlepsze rozwiązanie}
+			\label{fig:summary}
+			\end{figure}
 \end{enumerate}
-Informacje przezentowane w oknach są automatycznie odświeżane po zakończeniu każdej iteracji.\\
-\textbf{Uwaga:} Zamknięcie któregokolwiek z okien spowoduje zakończenie działania aplikacji.
+Informacje przezentowane w oknach są automatycznie odświeżane po zakończeniu każdej iteracji.
 
 
 \subsection{Format pliku z danymi wejściowymi} \label{format}
@@ -370,6 +378,92 @@ Pojedyncza linia opisująca $j$-ty~przedmiot składa się z $m+1$~liczb rzeczywi
 Pierwsza z nich to $p_j$~--~wartość (cena)
 przedmiotu. Kolejne $m$ liczb oznacza kolejne rozmiary przedmiotu $w_{ij}$  ($1 \le i \le m$).
 
+
+\chapter{Testy aplikacji}
+Przykładowe testy przeprowadzono na tych samych danych wejściowych, uruchamiając algorytm wielokrotnie.\\
+Testy przeprowadzono dla następujących konfiguracji danych i algorytmu:
+\begin{figure}[H]
+\begin{center}
+	\begin{tabular}{ | p{7.5cm} | p{1.5cm} | } \hline
+	ilość wymiarów	&	20 \\\hline
+	ilośc przedmiotów	&	200 \\\hline
+	rozmiar plecaka w jednym wymiarze	&	100 \\\hline
+	maksymalny rozmiar przedmiotu w jednym wymiarze	& 20 \\\hline
+	\end{tabular}
+\end{center}
+\caption{Parametry danych użytych w testach}
+\label{fig:testparams}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+	\begin{tabular}{ | p{7.5cm} | p{1.5cm} | } \hline
+	$nBee$	&	zmienna \\\hline
+	$nSite$	&	5 \\\hline
+	$ngh$	&	2 \\\hline
+	$nep$	&	2 \\\hline
+	$maxIterations$	&	100 \\\hline
+	\end{tabular}
+\end{center}
+\caption{Parametry algorytmu podczas testów}
+\label{fig:algparams}
+\end{figure}
+
+\noindent
+Oczekiwano rezultatów:
+\begin{itemize}
+	\item	Szybsza zbieżność wyszukiwania optymalnego rozwiązania
+			wraz ze zwiększaniem ilości pszczół.
+	\item	Wraz ze wzrostem liczby pszczół każda iteracja, a zatem całe uruchomienie algorytmu trwa dłużej.
+	\item	Dla odpowiednio dużej ilości iteracji optymalne rozwiązanie nie jest zależne od
+			użytej ilości pszczół.
+	\item	Algorytm jest algorytmem aproksymacyjnym - rezultaty na ogół nie będą powtarzalne,
+			nawet dla takich samych uruchomień (z takimi samymi parametrami)
+\end{itemize}
+
+Poniższa tabela przedstawia wyniki pomiarów:
+
+\begin{figure}[H]
+\begin{center}
+	\begin{tabular}{ | p{1.5cm} | p{3.5cm} | p{3.5cm} | p{3.5cm} |} \hline
+	$nBee$ & optymalne rozwiązanie (max. wartość plecaka) & nr iteracji z optymalnym rozw. & Ilość wybranych przedmiotów w optymalnym rozw. \\\hline\hline
+	5	&	165.0	&	87	&	9 \\\hline
+	8	&	162.0	&	16	&	9 \\\hline
+	20	&	162.0	&	66	&	10 \\\hline
+	50	&	168.0	&	88	&	10 \\\hline
+	100	&	164.0	&	42	&	10 \\\hline
+	200	&	162.0	&	51	&	10 \\\hline
+	\end{tabular}
+\end{center}
+\caption{Wyniki testów}
+\label{fig:testres}
+\end{figure}
+
+Wykresy zbieżności rozwiązania dla dwóch ilości pszczół:
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{convergence5.png}
+\caption{Wykres zbieżności, $nBee = 5$}
+\label{fig:chart100}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{convergence100.png}
+\caption{Wykres zbieżności, $nBee = 5$}
+\label{fig:chart100}
+\end{figure}
+
+\noindent
+Wnioski:
+\begin{itemize}
+	\item	Potwierdzona została większość oczekiwanych rezultatów
+	\item	Na powyższych dwóch wykresach przedstawiono uruchomienia algorytmu, dla których
+			najwyraźniej widać różnicę w zbieżności w zależności od ilości pszczół
+			(Pozostałe wykresy w folderze tests).
+			W ogólności jednak zbieżność jest zależna od doboru pozostałych parametrów,
+			ilości wymiarów, itp. i niekoniecznie jest widoczna oczekiwana zależność
+\end{itemize}
 
 \chapter{Podsumowanie}
 \section{Użyte technologie}
@@ -428,6 +522,7 @@ bezpośrednio nie udało się ominąć.
 	\item[folder knabees]	 --- folder z kompletnym kodem źródłowym aplikacji
 	\item[plik knabees-1.0-jar-with-dependencies.jar]	 --- plik jar zbudowanej aplikacji Javowej
 	\item[pokaz.avi]	 --- krótki filmik demonstrujący działanie aplikacji
+	\item[folder tests]		--- folder z danymi wejściowymi, oraz wykresami dla przeprowadzonych testów
 \end{description}
 
 \begin{thebibliography}{9}
