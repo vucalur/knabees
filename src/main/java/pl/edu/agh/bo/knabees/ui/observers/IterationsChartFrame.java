@@ -115,6 +115,7 @@ public class IterationsChartFrame extends IconisedJFrame implements Observer<Ite
 					JFrame parent = new JFrame();
 					JOptionPane optionPane = new JOptionPane(MESSAGE, JOptionPane.INFORMATION_MESSAGE);
 					JDialog dialog = optionPane.createDialog(parent, "Summary - optimal solution (" + calculationsCounter + ")");
+					dialog.setModal(false);
 					dialog.setVisible(true);
 				}
 			});
