@@ -19,6 +19,7 @@ import javax.swing.ScrollPaneConstants;
 
 import org.apache.log4j.Logger;
 
+import pl.edu.agh.bo.knabees.communication.FinishedData;
 import pl.edu.agh.bo.knabees.communication.IterationData;
 import pl.edu.agh.bo.knabees.communication.Observer;
 import pl.edu.agh.bo.knabees.model.Item;
@@ -46,7 +47,7 @@ public class IterationsChoicesFrame extends IconisedJFrame implements Observer<I
 	}
 
 	private void initilize(List<Item> allItems) {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocation(220, 70);
 		// ↓↓↓ Suppresses list resizing
 		// ! this.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 30));
@@ -103,7 +104,7 @@ public class IterationsChoicesFrame extends IconisedJFrame implements Observer<I
 	}
 
 	@Override
-	public void notifyTaskFinished() {
+	public void notifyTaskFinished(FinishedData finishedData) {
 		// not applicable - do nothing
 	}
 }

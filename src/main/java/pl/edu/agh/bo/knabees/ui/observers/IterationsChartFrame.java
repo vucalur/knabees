@@ -18,6 +18,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import pl.edu.agh.bo.knabees.communication.FinishedData;
 import pl.edu.agh.bo.knabees.communication.IterationData;
 import pl.edu.agh.bo.knabees.communication.Observer;
 import pl.edu.agh.bo.knabees.ui.components.IconisedJFrame;
@@ -37,7 +38,7 @@ public class IterationsChartFrame extends IconisedJFrame implements Observer<Ite
 
 	public IterationsChartFrame() {
 		super("Solutions chart (" + ++calculationsCounter + ")");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocation(120, 150);
 		setPreferredSize(new Dimension(700, 500));
 
@@ -90,16 +91,25 @@ public class IterationsChartFrame extends IconisedJFrame implements Observer<Ite
 	}
 
 	@Override
-	public void notifyTaskFinished() {
+	public void notifyTaskFinished(final FinishedData finishedData) {
 		try {
 			EventQueue.invokeAndWait(new Runnable() {
 				@Override
 				public void run() {
+					StringBuilder items = new StringBuilder();
+					for (int i = 0; i < finishedData.getIsItemTaken().length; i++) {
+						if (finishedData.getIsItemTaken()[i]) {
+							items.append(i + "<br />");
+						}
+					}
+
 					// @formatter:off
 					String MESSAGE = "<html>Maximal total taken value in most optimal solution: " + maxTotalValue + "<br />"
 							+ "Solution found in iteration: " + iterationWithMaxTotalValue + "<br />"
-							+ "Solution picked " + takenItemsCountOnBestSolution + " items"
-							+"</html>";
+							+ "Solution picked " + takenItemsCountOnBestSolution + " items" + "<br />" + "<br />"
+							+ "Chosen items numbers :" + "<br />"
+							+ items.toString()
+							+ "</html>";
 					// @formatter:on
 
 					JFrame parent = new JFrame();

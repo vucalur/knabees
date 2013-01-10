@@ -9,7 +9,7 @@ import java.util.List;
  * notifyAllObservers()
  * 
  * @param <T>
- *            Type of Data being send to observers
+ *            Type of Data being send to observers after each iteration
  */
 public abstract class Observable<T> {
 	private List<Observer<T>> observers = new ArrayList<Observer<T>>();
@@ -20,9 +20,9 @@ public abstract class Observable<T> {
 		}
 	}
 
-	protected void notifyAllObserversTaksFinished() {
+	protected void notifyAllObserversTaksFinished(FinishedData finishedData) {
 		for (Observer<T> observer : observers) {
-			observer.notifyTaskFinished();
+			observer.notifyTaskFinished(finishedData);
 		}
 	}
 

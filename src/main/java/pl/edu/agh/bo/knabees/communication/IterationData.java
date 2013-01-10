@@ -4,7 +4,7 @@ package pl.edu.agh.bo.knabees.communication;
  * Immutable !!!! <br />
  * Whenever editing, do not remove this crucial property
  * 
- * Represents data sent to observers on
+ * Represents data sent to observers in each iteration
  */
 public final class IterationData {
 	private final int iterationNum;

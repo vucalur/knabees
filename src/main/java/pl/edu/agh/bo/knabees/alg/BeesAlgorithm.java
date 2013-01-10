@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import pl.edu.agh.bo.knabees.communication.FinishedData;
 import pl.edu.agh.bo.knabees.communication.IterationData;
 import pl.edu.agh.bo.knabees.communication.Observable;
 import pl.edu.agh.bo.knabees.model.Item;
@@ -316,7 +317,7 @@ public class BeesAlgorithm extends Observable<IterationData> {
 		}
 		System.out.println("\t(" + big_price + ")");
 		// TODO: end of tests
-		notifyAllObserversTaksFinished();
+		notifyAllObserversTaksFinished(new FinishedData(solution));
 	}
 
 	public boolean[] getSolution() {
