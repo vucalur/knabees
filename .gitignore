@@ -10,6 +10,9 @@ doc/*
 !.gitignore
 !.gitkeep
 
+.idea
+*.iml
+
 # Eclipse trash #
 ###################
 # necessary for initial eclipse project setup
